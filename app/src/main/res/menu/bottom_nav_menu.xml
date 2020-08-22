@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"
+    ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_submit_information"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_submit_information"
+        android:title="@string/sumbit_information_cartable_detail"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_attachment_file"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_attachment"
+        android:title="@string/attachment_file_cartable_detail"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_margin"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_margin"
+        android:title="@string/margin_cartable_detail"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_return_refrral"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_return_refferal"
+        android:title="@string/return_refferal_cartable_detail"
+        app:showAsAction="ifRoom" />
+
+</menu>

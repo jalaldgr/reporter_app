@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Textstyleee" parent="TextAppearance.AppCompat.Headline" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="lable_text_view_style" parent="TextAppearance.AppCompat.Headline">
+
+    </style>
+
+<style name="TextTitleCartableDetail">
+    <item name="android:textColor">?attr/actionMenuTextColor</item>
+    <item name="android:padding">15dp</item>
+</style>
+
+
+
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layoutDirection">rtl</item>
+
+    </style>
+
+    <style name="myDialog" parent="Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:layoutDirection">rtl</item>
+
+
+
+    </style>
+
+
+    <style name="TextInputLayoutThem" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/design_default_color_secondary_variant</item>
+        <item name="android:textSize">@dimen/text_margin</item>
+        <item name="colorControlNormal">@color/colorDone</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/yekan</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">گروه خبری سپهر</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">تنضیمات</string>
+
+    <string name="menu_home">کارتابل</string>
+    <string name="InternetError">دسترسی به وبگاه سپهر غرب امکان پذیر نمی باشد، لطفا اتصال اینترنت خود را بررسی نمایید.</string>
+
+    <string name="menu_gallery">پروفایل کاربر</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">درباره نرم افزار</string>
+    <string name="menu_send">نمایش سایت</string>
+    <string name="aboutus_version_name">  نسخه نرم افزار</string>
+    <string name="title_activity_cartable_detail">مشاهده مدرک</string>
+    <string name="organ_cartable_detail">ارگان</string>
+    <string name="subject_cartable_detail">موضوع</string>
+    <string name="description_lable_cartable_detail">شرح مدرک</string>
+    <string name="people_id_cartable_detail"> مصاحبه با</string>
+    <string name="to_user_id_cartable_detail">ارجاع به</string>
+    <string name="urgency_id_cartable_detail">فوریت مدرک</string>
+    <string name="action_date_cartable_detail">زمان اقدام</string>
+    <string name="new_type_id_cartable_detail">نوع مدرک</string>
+    <string name="description_cartable_detail">
+    </string>
+    <string name="return_refferal_cartable_detail">برگشت مدرک</string>
+    <string name="stop_interview_cartable_detail">پایان مصاحبه</string>
+    <string name="start_interview_cartable_detail">شروع مصاحبه</string>
+
+    <string name="margin_cartable_detail">هامش</string>
+    <string name="sumbit_information_cartable_detail">ورود اطلاعات</string>
+    <string name="attachment_cartable_detail">فایل ضمیمه</string>
+    <string name="attachment_file_cartable_detail">فایل ضمیمه</string>
+    <string name="MarginsActivityRowNumber">ردریف</string>
+    <string name="MarginsActivityِDescription">متن هامش</string>
+    <string name="MarginsActivityRememberDate">زمان یادآوری</string>
+    <string name="MarginsActivityّFirstnameLastname">کاربر ثبت کننده</string>
+    <string name="NewMarginsDescription">متن هامش را وارد کنید</string>
+    <string name="AttachmentsActivityRowNum">ردیف</string>
+    <string name="AttachmentsActivityFilesname">لیست فایل ها</string>
+    <string name="AttachmentsActivityDescription">توضیحات</string>
+    <string name="AttachmentsActivityUser">کاربر ثبت کننده</string>
+    <string name="FullName">نام و نام خانوادگی</string>
+    <string name="Phone">تلفن</string>
+    <string name="Mobile">موبایل</string>
+    <string name="Address">آدرس</string>
+    <string name="Organ">ارگان</string>
+    <string name="Fax">فکس</string>
+    <string name="ReminderMarginSwtchText">نمایش هامش یادآوری</string>
+    <string name="LogOutUser">خروج از حساب کاربری</string>
+
+    <string name="ActivityLoginUsername">نام کاربری</string>
+    <string name="ActivityLoginPasswordd">رمز عبور</string>
+    <string name="ActivityLoginLogin">ورود</string>
+    <string name="activityLoginChckbx">مرا به خاطر بسپار</string>
+
+
+
+
+
+
+
+
+    <string-array name="margin_title_arrays">
+        <item>عادی</item>
+        <item>یادآوری</item>
+    </string-array>
+    <string-array name="referral_return_reasons">
+        <item>دیگر موارد</item>
+        <item>برگزار نشدن جلسه</item>
+    </string-array>
+
+    <string name="SubmitInformationNavAdditioanl">اطلاعات تکمیلی</string>
+    <string name="SubmitInformationNavImage">تصویر</string>
+
+    <string name="SubmitInfromationTopTitle">رو تیتر</string>
+    <string name="SubmitInformationTitle">تیتر خبر</string>
+    <string name="SubmitInfromationUnderTitle">زیر تیتر</string>
+    <string name="SubmitInformationSummary">خلاصه خبر</string>
+    <string name="SubmitInformationMainContent">متن اصلی خبر</string>
+    <string name="SubmitInformationCategory">سرویس خبری</string>
+    <string name="SubmitInformationProvince">استان</string>
+    <string name="SubmitInformationUsername">خبرنگار</string>
+    <string name="SubmitInformationNewsType">نوع خبر</string>
+    <string name="SubmitInformationCity">شهر</string>
+    <string name="margin_text">متن هامش</string>
+
+    <string-array name="SubmitInformationCategory">
+        <item> سرویس خبری</item>
+    </string-array>
+
+    <string-array name="SubmitInformationProvince">
+        <item> استان</item>
+    </string-array>
+
+    <string-array name="SubmitInformationUsername">
+        <item> خبرنگار</item>
+    </string-array>
+
+    <string-array name="SubmitInformationNewsType">
+        <item>تولیدی</item>
+        <item>پوششی</item>
+        <item>ارسالی</item>
+        <item>نقلی</item>
+    </string-array>
+    <string-array name="SubmitInformationCity">
+        <item> شهر</item>
+    </string-array>
+
+</resources>

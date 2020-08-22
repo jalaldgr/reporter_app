@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/submit_info_main_titr_popup_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:background="#fafafa"
+    android:foregroundGravity="right"
+    android:gravity="right"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:textDirection="anyRtl">
+
+    <EditText
+        android:id="@+id/popupztxt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/close"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Close" />-->
+
+</LinearLayout>
