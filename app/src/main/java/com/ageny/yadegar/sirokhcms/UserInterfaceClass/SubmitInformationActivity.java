@@ -104,8 +104,6 @@ public class SubmitInformationActivity extends AppCompatActivity {
         RID=intent.getStringExtra("cartableid");
         UID=intent.getStringExtra("userid");
         RSID=intent.getStringExtra("referralstateid");
-        MainTitrTxt = (TextView) findViewById(R.id.news_main_titr_textview);    //(TextView)findViewById(android.R.id.textViewPOI9);
-
 
         LinearLayout news_main_titr_layout_in_code = (LinearLayout)findViewById(R.id.news_main_titr_layout);
         LinearLayout news_titr_layout_in_code = (LinearLayout)findViewById(R.id.news_titr_layout);
@@ -128,7 +126,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
         preNewsUpdateDataModelClass.setTop_Title(null);
         preNewsUpdateDataModelClass.setNews_MainPic_File(null);
 
-
+        MainTitrTxt = (TextView) findViewById(R.id.news_main_titr_textview);
         TitrTxt = (TextView) findViewById(R.id.news_titr_textView);
         SubTitrTxt = (TextView) findViewById(R.id.news_sub_titr_textView);
         news_content_txt_in_code = (TextView)findViewById(R.id.news_content_textView);
@@ -248,10 +246,9 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     ListArray[i] = stringList.get(i).toString();
                 }
 
-                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedcategory, null);
-                MainDialogAlertDialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                MainDialogAlertDialog.setSingleChoiceItems(ListArray, checkedcategory, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int i) {
                         CategoriTxt = (TextView) findViewById(R.id.news_categori_textView);
                         CategoriTxt.setText(SelectedResult);
                         ListView lw = ((AlertDialog)dialog).getListView();
@@ -262,10 +259,9 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         preNewsUpdateDataModelClass.setNews_Category_Id(Integer.toString(
                                 lw.getCheckedItemPosition()+1
                         ));
-
+                        dialog.dismiss();
                     }
                 });
-                MainDialogAlertDialog.setNegativeButton("انصراف" , null);
                 final AlertDialog al = MainDialogAlertDialog.create();
                 al.show();
                 //----------------------------------------------------------------
@@ -289,8 +285,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     ListArray[i] = stringList.get(i).toString();
                 }
 
-                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedprovince, null);
-                MainDialogAlertDialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedprovince, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CategoriTxt = (TextView) findViewById(R.id.news_province_textView);
@@ -316,10 +311,10 @@ public class SubmitInformationActivity extends AppCompatActivity {
                             preNewsUpdateDataModelClass.setCity_Id(" ");
 
                         }
+                        dialog.dismiss();
 
                     }
                 });
-                MainDialogAlertDialog.setNegativeButton("انصراف" , null);
                 final AlertDialog al = MainDialogAlertDialog.create();
                 al.show();
                 //----------------------------------------------------------------
@@ -343,8 +338,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     Log.d("hhh reporters", StrArray[i][0]+StrArray[i][1]);
 
                 }
-                ReportersDialogAlertDialog.setSingleChoiceItems(ListArray,checkedreporter, null);
-                ReportersDialogAlertDialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                ReportersDialogAlertDialog.setSingleChoiceItems(ListArray,checkedreporter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CategoriTxt = (TextView) findViewById(R.id.news_person_textView);
@@ -356,11 +350,11 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         checkedprovince = lw.getCheckedItemPosition();
 
                         checkedreporter = lw.getCheckedItemPosition();
+                        dialog.dismiss();
 
                     }
                 });
                  preNewsUpdateDataModelClass.setUser_Id(StrArray [checkedreporter][1] );
-                ReportersDialogAlertDialog.setNegativeButton("انصراف" , null);
                 final AlertDialog al = ReportersDialogAlertDialog.create();
                 al.show();
             }
@@ -383,8 +377,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 }
                 Log.d("ttt",Integer.toString(stringList.size()));
 
-                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedcity, null);
-                MainDialogAlertDialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedcity, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         citytxt = (TextView) findViewById(R.id.news_city_textView);
@@ -397,9 +390,10 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         preNewsUpdateDataModelClass.setCity_Id(Integer.toString(
                                 lw.getCheckedItemPosition()+1
                         ));
+                        dialog.dismiss();
+
                     }
                 });
-                MainDialogAlertDialog.setNegativeButton("انصراف" , null);
                 final AlertDialog al = MainDialogAlertDialog.create();
                 al.show();
             }
@@ -412,8 +406,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //----------------------------------------------------------------
 
-                MainDialogAlertDialog.setSingleChoiceItems(R.array.SubmitInformationNewsType,checkednewstyp, null);
-                MainDialogAlertDialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                MainDialogAlertDialog.setSingleChoiceItems(R.array.SubmitInformationNewsType,checkednewstyp, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CategoriTxt = (TextView) findViewById(R.id.news_type_textView_);
@@ -426,11 +419,11 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         preNewsUpdateDataModelClass.setNews_Type_Id(Integer.toString(
                                 lw.getCheckedItemPosition()+1
                         ));
+                        dialog.dismiss();
+
                     }
                 });
-                MainDialogAlertDialog.setNegativeButton("انصراف" , null);
                 final AlertDialog al = MainDialogAlertDialog.create();
-
                 al.show();
                 //----------------------------------------------------------------
 
