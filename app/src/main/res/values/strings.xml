@@ -111,4 +111,14 @@
         <item> شهر</item>
     </string-array>
 
+    <string name="SubmitInformationTitleHint"><font size="30" fgcolor='#cc0029'>*   </font>تیتر خبر</string>
+    <string name="SubmitInformationCategoryHint"><font size="30" fgcolor='#cc0029'>*   </font>سرویس خبری</string>
+    <string name="SubmitInformationProvinceHint"><font size="30" fgcolor='#cc0029'>*   </font>استان</string>
+    <string name="SubmitInformationCityHint"><font size="30" fgcolor='#cc0029'>*   </font>شهر</string>
+    <string name="SubmitInformationUsernameHint"><font size="30" fgcolor='#cc0029'>*   </font>خبرنگار</string>
+    <string name="SubmitInformationNewsTypeHint"><font size="30" fgcolor='#cc0029'>*   </font>نوع خبر</string>
+    <string name="SubmitInformationSummaryHint"><font size="30" fgcolor='#cc0029'>*   </font>خلاصه خبر</string>
+    <string name="SubmitInformationMainContentHint"><font size="30" fgcolor='#cc0029'>*   </font>متن کامل خبر</string>
+
+
 </resources>

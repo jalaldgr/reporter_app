@@ -502,13 +502,10 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 preNewsUpdateDataModelClass.setUser_Id(UID);
                 preNewsUpdateDataModelClass.setReferral_Id(RID);
                 preNewsUpdateDataModelClass.setMainContent(news_content_txt_in_code.getText().toString());
-
                 if (!preNewsUpdateDataModelClass.isanyUnset()) {
-
                     PreNewsUpdate( preNewsUpdateDataModelClass);
-
                 }else{
-                    Toast.makeText(Cntx, "لطفا فیلدهای ورودی را پر کنید", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Cntx, "لطفا فیلدهای ستاره دار را پر کنید", Toast.LENGTH_LONG).show();
                 }
             }
         });

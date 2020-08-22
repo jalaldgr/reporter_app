@@ -52,7 +52,6 @@
                         android:id="@+id/news_main_titr_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="تیتر خبر"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -109,7 +108,7 @@
                         android:id="@+id/news_titr_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="تیتر خبر"
+                        android:hint="@string/SubmitInformationTitleHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -224,6 +223,7 @@
                         android:id="@+id/news_categori_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SubmitInformationCategoryHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -325,6 +325,7 @@
                         android:id="@+id/news_province_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SubmitInformationProvinceHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -385,6 +386,7 @@
                         android:id="@+id/news_city_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SubmitInformationCityHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -444,13 +446,14 @@
                         android:id="@+id/news_person_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SubmitInformationUsernameHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
                         android:paddingTop="27dp"
                         android:paddingRight="9dp"
                         android:paddingBottom="9dp"
-                        android:text="خبرنگار" />
+                       />
 
                 </LinearLayout>
 
@@ -501,6 +504,7 @@
                         android:id="@+id/news_type_textView_"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SubmitInformationNewsTypeHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -557,7 +561,7 @@
                         android:id="@+id/news_summary_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="خلاصه خبر"
+                        android:hint="@string/SubmitInformationSummaryHint"
                         android:includeFontPadding="false"
                         android:padding="12dp"
                         android:paddingLeft="12dp"
@@ -593,7 +597,7 @@
                     android:id="@+id/news_content_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="متن کامل خبر"
+                    android:hint="@string/SubmitInformationMainContentHint"
                     android:inputType="textMultiLine"
                     android:minHeight="150dp" />
 
