@@ -42,7 +42,6 @@ public class MarginsItemAdapter extends RecyclerView.Adapter<MarginsItemAdapter.
         InfoAlertDialog =new AlertDialog.Builder(new ContextThemeWrapper(ac, R.style.myDialog));
 
 
-        //Toast.makeText(Cntx,"itemAdapter says:" + urList.toString() , Toast.LENGTH_SHORT).show();
 
     }
 
@@ -61,15 +60,6 @@ public class MarginsItemAdapter extends RecyclerView.Adapter<MarginsItemAdapter.
         aView = LayoutInflater.from(Paramac).inflate(R.layout.margin_recycler_item_list, parent, false);
         customLayout =LayoutInflater.from(Paramac).inflate(R.layout.margin_alert_dialog_show, parent, false);
 
-        //parent.addView(customLayout);
-
-
-
-
-
-        //aView.clearAnimation();
-        //Toast.makeText(Cntx,"onCreate say" , Toast.LENGTH_SHORT).show();
-        //customLayout.clearAnimation();
         return new MyViewHolder(aView);
     }
 

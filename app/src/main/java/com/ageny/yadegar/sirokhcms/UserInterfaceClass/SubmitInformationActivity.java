@@ -18,10 +18,12 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -505,7 +507,13 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 if (!preNewsUpdateDataModelClass.isanyUnset()) {
                     PreNewsUpdate( preNewsUpdateDataModelClass);
                 }else{
-                    Toast.makeText(Cntx, "لطفا فیلدهای ستاره دار را پر کنید", Toast.LENGTH_LONG).show();
+                    Toast toast= Toast.makeText(Cntx,
+                            "لطفا فیلدهای ستاره دار را پر کنید", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    ViewGroup group = (ViewGroup) toast.getView();
+                    TextView messageTextView = (TextView) group.getChildAt(0);
+                    messageTextView.setTextSize(18);
+                    toast.show();
                 }
             }
         });
@@ -592,6 +600,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 super.onPreExecute();
                   news_submit_button_in_code.setEnabled(false);
                   this.dialog.setMessage("ارسال اطلاعات...");
+                  this.dialog.setCanceledOnTouchOutside(false);
                   this.dialog.show();
             }
 
@@ -620,7 +629,13 @@ public class SubmitInformationActivity extends AppCompatActivity {
 
                 }
                 if(dialog.isShowing())this.dialog.dismiss();
-                Toast.makeText(Cntx,JsonResult,Toast.LENGTH_LONG).show();
+                Toast toast= Toast.makeText(Cntx,
+                        JsonResult, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                ViewGroup group = (ViewGroup) toast.getView();
+                TextView messageTextView = (TextView) group.getChildAt(0);
+                messageTextView.setTextSize(18);
+                toast.show();
 
             }
 

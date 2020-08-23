@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -121,7 +123,6 @@ public class AddMarginActivity extends AppCompatActivity implements
         CancelBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Cntx, "ثبت هامش لغو شد.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -135,7 +136,13 @@ public class AddMarginActivity extends AppCompatActivity implements
                         || TextUtils.isEmpty(timeedittext.getText().toString())) || TextUtils.isEmpty(descriptionedittext.getText().toString())))) {
 
 
-                    Toast.makeText(Cntx, "لطفا ورودی ها را کنترل کنید", Toast.LENGTH_SHORT).show();
+                    Toast toast= Toast.makeText(Cntx,
+                            "لطفا ورودی ها را کنترل کنید", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    ViewGroup group = (ViewGroup) toast.getView();
+                    TextView messageTextView = (TextView) group.getChildAt(0);
+                    messageTextView.setTextSize(18);
+                    toast.show();
                 }else
                 {
                     ReferralFolderMarginAdd(RID, UID,descriptionedittext.getText().toString(),
@@ -209,6 +216,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
             protected void onPreExecute() {
                 super.onPreExecute();
                 this.dialog.setMessage("ارسال اطلاعات...");
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
 
@@ -227,7 +235,13 @@ public boolean onOptionsItemSelected(MenuItem item) {
                     strresult = "خطایی در ارتباط رخ داده، هامش ثبت نشد.";
                     e.printStackTrace();
                 }
-                Toast.makeText(Cntx, strresult, Toast.LENGTH_SHORT).show();
+                Toast toast= Toast.makeText(Cntx,
+                        strresult, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                ViewGroup group = (ViewGroup) toast.getView();
+                TextView messageTextView = (TextView) group.getChildAt(0);
+                messageTextView.setTextSize(18);
+                toast.show();
                 finish();
 
             }

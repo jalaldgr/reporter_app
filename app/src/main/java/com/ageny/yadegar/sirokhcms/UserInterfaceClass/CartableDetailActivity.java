@@ -11,8 +11,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -297,6 +299,7 @@ public class CartableDetailActivity extends AppCompatActivity {
 
                 this.dialog.setMessage("دریافت اطلاعات...");
                 this.dialog.setIndeterminate(true);
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
 
@@ -351,8 +354,8 @@ public class CartableDetailActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ERROR ShowReferralFolder: "+ex.toString());
                 }
-                textViewSubject.setText(Ur.getSubject());
-                textViewDescription.setText(Ur.getDescription());
+                textViewSubject.setText((Ur.getSubject().toString().equals(null)) ? Ur.getSubject() : "بدون عنوان");
+                textViewDescription.setText( (Ur.getDescription().toString().equals(null)) ? Ur.getDescription() :"بدون توضیحات" );
                 textViewOrgan.setText(Ur.getOrgan_Title());
                 textViewPeople.setText(Ur.getPeople_first_name() + " " + Ur.getPeople_last_name());
                 textViewActiondate.setText(Ur.getActionDate());
@@ -410,7 +413,13 @@ public class CartableDetailActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(s);
                     if(obj.getInt("State")>0) {
                         startinterviewresult = s;
-                        Toast.makeText(CartableDetailActivity.this, "شروع مصاحبه ثبت شد", Toast.LENGTH_SHORT).show();
+                        Toast toast= Toast.makeText(CartableDetailActivity.this,
+                                "شروع مصاحبه ثبت شد", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        ViewGroup group = (ViewGroup) toast.getView();
+                        TextView messageTextView = (TextView) group.getChildAt(0);
+                        messageTextView.setTextSize(18);
+                        toast.show();
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ReferralFolderStartInterview: "+ex.toString());
@@ -455,7 +464,13 @@ public class CartableDetailActivity extends AppCompatActivity {
                     //converting response to json object
                     JSONObject obj = new JSONObject(s);
                     if (obj.getInt("State")>0) {
-                        Toast.makeText(CartableDetailActivity.this, "پایان مصاحبه ثبت شد", Toast.LENGTH_SHORT).show();
+                        Toast toast= Toast.makeText(CartableDetailActivity.this,
+                                "پایان مصاحبه ثبت شد", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        ViewGroup group = (ViewGroup) toast.getView();
+                        TextView messageTextView = (TextView) group.getChildAt(0);
+                        messageTextView.setTextSize(18);
+                        toast.show();
                         stopinterviewresult = s;
                     }
                 } catch (Exception ex) {

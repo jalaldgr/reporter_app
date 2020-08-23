@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,8 +60,6 @@ public class AboutusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CheckUpdateUrl(URLs.getBaseURL()+URLs.getAppUpdate(), getActivity());
-//                Toast.makeText(getActivity(), "404فایل مورد نظر یافت نشد." +
-//                        "\nhttps:/anynews.com/SirokhApp/AppUpdater/json/update-changelog.json", Toast.LENGTH_LONG).show();
             }
         });
         return root;
@@ -92,6 +91,7 @@ public class AboutusFragment extends Fragment {
                 super.onPreExecute();
                 this.dialog.setMessage("دریافت اطلاعات...");
                 this.dialog.setIndeterminate(true);
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
 
@@ -99,8 +99,15 @@ public class AboutusFragment extends Fragment {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 if (s == "404") {
-                    Toast.makeText(cntx, "404: فایل بروزرسانی یافت نشد." +
-                            "\nhttps:/anynews.com/SirokhApp/AppUpdater/update-changelog.json", Toast.LENGTH_LONG).show();
+
+                    Toast toast= Toast.makeText(cntx,
+                            "404: فایل بروزرسانی یافت نشد." +
+                                    "\nhttps:/anynews.com/SirokhApp/AppUpdater/update-changelog.juson" , Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    ViewGroup group = (ViewGroup) toast.getView();
+                    TextView messageTextView = (TextView) group.getChildAt(0);
+                    messageTextView.setTextSize(18);
+                    toast.show();
                     return;
                 }
                 parseJson(s);
@@ -126,7 +133,13 @@ public class AboutusFragment extends Fragment {
 
                     } else {
                         if (dialog.isShowing())dialog.dismiss();
-                        Toast.makeText(cntx, "نرم افزار بروز است", Toast.LENGTH_SHORT).show();
+                        Toast toast= Toast.makeText(cntx,
+                                "نرم افزار بروز است", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        ViewGroup group = (ViewGroup) toast.getView();
+                        TextView messageTextView = (TextView) group.getChildAt(0);
+                        messageTextView.setTextSize(18);
+                        toast.show();
                     }
 
                 } catch (JSONException e) {

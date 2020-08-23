@@ -17,8 +17,10 @@ import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -131,7 +133,13 @@ public class AddAttachmentActivity extends AppCompatActivity {
                 }
                 else
                     {
-                        Toast.makeText(Cntx, "لطفا فایل ضمیمه را انتخاب کنید", Toast.LENGTH_LONG).show();
+                        Toast toast= Toast.makeText(Cntx,
+                                "لطفا فایل ضمیمه را انتخاب کنید" , Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        ViewGroup group = (ViewGroup) toast.getView();
+                        TextView messageTextView = (TextView) group.getChildAt(0);
+                        messageTextView.setTextSize(18);
+                        toast.show();
 
                     }
 
@@ -183,6 +191,7 @@ public class AddAttachmentActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 this.dialog.setMessage("ارسال اطلاعات...");
+                this.dialog.setCanceledOnTouchOutside(false);
                  this.dialog.show();
             }
 
@@ -199,7 +208,13 @@ public class AddAttachmentActivity extends AppCompatActivity {
                     e.printStackTrace();resultstr = "CATCH " + e.toString();
                 }
                 if(this.dialog.isShowing()) this.dialog.dismiss();
-                Toast.makeText(Cntx, resultstr, Toast.LENGTH_LONG).show();
+                Toast toast= Toast.makeText(Cntx,
+                        resultstr, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                ViewGroup group = (ViewGroup) toast.getView();
+                TextView messageTextView = (TextView) group.getChildAt(0);
+                messageTextView.setTextSize(18);
+                toast.show();
                 finish();
             }
 

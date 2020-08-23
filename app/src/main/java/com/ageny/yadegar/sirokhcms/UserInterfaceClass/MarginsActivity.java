@@ -136,6 +136,7 @@ public class MarginsActivity extends AppCompatActivity {
 
                 this.dialog.setMessage("دریافت اطلاعات...");
                 this.dialog.setIndeterminate(true);
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
 

@@ -106,6 +106,7 @@ public class Attachments_activity extends AppCompatActivity {
                 super.onPreExecute();
                 this.dialog.setMessage("دریافت اطلاعات...");
                 this.dialog.setIndeterminate(true);
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
 

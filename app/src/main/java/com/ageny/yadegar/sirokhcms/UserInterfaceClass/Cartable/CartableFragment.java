@@ -75,13 +75,6 @@ public class CartableFragment extends Fragment {
             public void onClick(View view) {
                 boolean f = JSONHandlre.isConnectedtoInternet(getActivity());
 
-//                if (!f){
-//                    Toast.makeText(myCONTEXT, "اینترنت قطع است", Toast.LENGTH_LONG).show();
-//                    MainTitrAlertDialog.setMessage("لطفا اتصال اینترنت را بررسی نمایید.");
-//                    AlertDialog al = MainTitrAlertDialog.create();
-//                    al.show();
-//                }
-
             }
         });
 
@@ -102,6 +95,7 @@ public  void LoadCartable( String UserID) {
             super.onPreExecute();//Log.d("hhh: " , "onPreExecute");
             this.dialog.setMessage("دریافت اطلاعات...");
             this.dialog.setIndeterminate(true);
+            this.dialog.setCanceledOnTouchOutside(false);
             this.dialog.show();
         }
 
@@ -159,13 +153,6 @@ public  void LoadCartable( String UserID) {
             } catch (Exception e) {
                 e.printStackTrace();URList=  ReturnList;
             }
-//            myDBHelper = new MYSQlDBHelper(myCONTEXT);
-//            try {
-//                myDBHelper.CreateDataBase();
-//            } catch (Exception e) {
-//                Log.i("MainActivity Says:", "create bank in load cartable" + e.toString());
-//            }
-
         }
 
         @Override

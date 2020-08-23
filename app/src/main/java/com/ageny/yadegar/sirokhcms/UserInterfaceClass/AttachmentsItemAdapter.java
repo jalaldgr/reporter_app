@@ -35,13 +35,11 @@ public class AttachmentsItemAdapter extends RecyclerView.Adapter<AttachmentsItem
         Cntx = cntx;
         Paramac =ac;
 
-        //Toast.makeText(Cntx,"itemAdapter says:" + urList.toString() , Toast.LENGTH_SHORT).show();
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View aView = LayoutInflater.from(Paramac).inflate(R.layout.attachments_recycler_item_list, parent, false);
-        //Toast.makeText(Cntx,"onCreate say" , Toast.LENGTH_SHORT).show();
         return new MyViewHolder(aView);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)

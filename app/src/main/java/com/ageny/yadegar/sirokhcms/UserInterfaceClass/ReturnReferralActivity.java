@@ -9,13 +9,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
@@ -123,6 +126,7 @@ public class ReturnReferralActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 this.dialog.setMessage("در حال ارسال اطلاعات...");
+                this.dialog.setCanceledOnTouchOutside(false);
                 this.dialog.show();
             }
             @Override
@@ -140,9 +144,18 @@ public class ReturnReferralActivity extends AppCompatActivity {
                     e.printStackTrace();
                     str = "خطایی رخ داده، برگشت مدرک ثبت نشد.";
                 }
+
+
+
                 strrespone= str;
-                Toast.makeText(Cntx, strrespone, Toast.LENGTH_SHORT).show();
-                startActivity(getIntent());
+                Toast toast= Toast.makeText(Cntx,
+                        strrespone , Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                ViewGroup group = (ViewGroup) toast.getView();
+                TextView messageTextView = (TextView) group.getChildAt(0);
+                messageTextView.setTextSize(18);
+                toast.show();
+
                 finish();
                 if (this.dialog.isShowing())this.dialog.dismiss();
 

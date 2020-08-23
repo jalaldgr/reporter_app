@@ -32,7 +32,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         this.URList = urList;
 
         Cntx = cntx;
-        //Toast.makeText(Cntx,"itemAdapter says:" + urList.toString() , Toast.LENGTH_SHORT).show();
 
     }
 
@@ -41,7 +40,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View aView = LayoutInflater.from(Cntx).inflate(R.layout.recycler_item_list, parent, false);
-        //Toast.makeText(Cntx,"onCreate say" , Toast.LENGTH_SHORT).show();
         return new MyViewHolder(aView);
     }
 

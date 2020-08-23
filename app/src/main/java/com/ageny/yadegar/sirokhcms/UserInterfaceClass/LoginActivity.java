@@ -11,10 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
@@ -120,11 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
-                    this.dialog.setMessage("دریافت اطلاعات...");
-                    this.dialog.setIndeterminate(true);
-                    this.dialog.show();
-                    //progressBar = (ProgressBar) findViewById(R.id.progressBar);
-                    //progressBar.setVisibility(View.VISIBLE);
+                    dialog.setMessage("دریافت اطلاعات...");
+                    dialog.setIndeterminate(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+
                 }
 
                 @Override
@@ -158,17 +161,28 @@ public class LoginActivity extends AppCompatActivity {
                             userDataModelClass = mysQlDBHelper.GetCurrentUser();
                             //Log.d("hhh login activity", "????????" + statestr);
                             if( userDataModelClass != null){
-                               // Toast.makeText(getApplicationContext(), userDataModelClass.getFirst_name() , Toast.LENGTH_SHORT).show();
                                 finish();
                                 Intent myIntent;
                                 myIntent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(myIntent);
                             }
                             else{
-                                Toast.makeText(getApplicationContext(), "پایگاه اطلاعاتی برنامه یافت نشد." , Toast.LENGTH_SHORT).show();
+                                Toast toast= Toast.makeText(getApplicationContext(),
+                                        "پایگاه اطلاعاتی برنامه یافت نشد.", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                                ViewGroup group = (ViewGroup) toast.getView();
+                                TextView messageTextView = (TextView) group.getChildAt(0);
+                                messageTextView.setTextSize(18);
+                                toast.show();
                             }
                         }else {
-                            Toast.makeText(getApplicationContext(), "نام کاربری و یا گذرواژه اشتباه است. " , Toast.LENGTH_SHORT).show();
+                            Toast toast= Toast.makeText(getApplicationContext(),
+                                    "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                            ViewGroup group = (ViewGroup) toast.getView();
+                            TextView messageTextView = (TextView) group.getChildAt(0);
+                            messageTextView.setTextSize(18);
+                            toast.show();
                             PasswordTxt.setText("");
                         }
                     } catch (Exception ex) {

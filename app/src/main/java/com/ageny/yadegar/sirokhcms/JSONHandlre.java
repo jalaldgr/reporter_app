@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -616,7 +619,13 @@ public class JSONHandlre {
                     //converting response to json object
                     JSONObject obj = new JSONObject(s);
                     //if no error in response
-                     Toast.makeText(myCONTEXT, "وضعیت شروع مصاحبه"+s, Toast.LENGTH_SHORT).show();
+                    Toast toast= Toast.makeText(myCONTEXT,
+                            "وضعیت شروع مصاحبه"+s , Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    ViewGroup group = (ViewGroup) toast.getView();
+                    TextView messageTextView = (TextView) group.getChildAt(0);
+                    messageTextView.setTextSize(18);
+                    toast.show();
 
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ReferralFolderStartInterview: "+ex.toString());
@@ -664,7 +673,13 @@ public class JSONHandlre {
                     //converting response to json object
                     JSONObject obj = new JSONObject(s);
                     //if no error in response
-                    Toast.makeText(myCONTEXT, "وضعیت پایان مصاحبه"+s, Toast.LENGTH_SHORT).show();
+                    Toast toast= Toast.makeText(myCONTEXT,
+                            "وضعیت پایان مصاحبه"+s, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    ViewGroup group = (ViewGroup) toast.getView();
+                    TextView messageTextView = (TextView) group.getChildAt(0);
+                    messageTextView.setTextSize(18);
+                    toast.show();
 
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ReferralFolderStartInterview: "+ex.toString());
@@ -797,7 +812,6 @@ public class JSONHandlre {
                     JSONObject obj = new JSONObject(s);
                     myDBHelper.DeleteNewsCategories();
                     //if no error in response
-                    //Toast.makeText(myCONTEXT, "وضعیت شروع مصاحبه"+s, Toast.LENGTH_SHORT).show();
 
                       if (obj.getInt("State")>0) {
                             JSONArray TmpJsonArr = obj.getJSONArray("Data");
@@ -1251,7 +1265,10 @@ public class JSONHandlre {
             flag = false;
           }
         if (!flag){
-            Toast.makeText(cntx, "لطفا اتصال اینترنت را بررسی نمایید.", Toast.LENGTH_LONG).show();
+            Toast toast= Toast.makeText(cntx,
+                    "لطفا اتصال اینترنت را بررسی نمایید." , Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
 
             /*MainTitrAlertDialog.setMessage("لطفا اتصال اینترنت را بررسی نمایید.");
             AlertDialog al = MainTitrAlertDialog.create();
