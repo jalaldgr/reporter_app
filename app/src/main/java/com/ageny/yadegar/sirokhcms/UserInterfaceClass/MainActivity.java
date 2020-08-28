@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         URL url=null ;
         mysQlDBHelper = new MYSQlDBHelper(getApplicationContext());
         try {
-            mysQlDBHelper.CreateDataBase();
+            mysQlDBHelper.getWritableDatabase();
         }catch (Exception e){
             Log.i("hhh Says:", "Main Activity: "+ e.toString());
         }
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 mysQlDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    mysQlDBHelper.CreateDataBase();
+                    mysQlDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("GetNewsReporters Says:", "create bank in NewsReporters"+ e.toString());
                 }

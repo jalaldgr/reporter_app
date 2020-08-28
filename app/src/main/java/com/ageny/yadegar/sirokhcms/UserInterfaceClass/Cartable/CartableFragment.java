@@ -53,7 +53,7 @@ public class CartableFragment extends Fragment {
         myDBHelper = new MYSQlDBHelper(myCONTEXT);
 
         try {
-            myDBHelper.CreateDataBase();
+            myDBHelper.getWritableDatabase();
             crrntUser = myDBHelper.GetCurrentUser();
             LoadCartable lc = new LoadCartable();
             lc.execute();

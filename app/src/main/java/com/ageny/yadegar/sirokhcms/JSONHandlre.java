@@ -81,7 +81,7 @@ public class JSONHandlre {
 
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 } catch (Exception e) {
                     Log.i("MainActivity Says:", "create bank in load cartable" + e.toString());
                 }
@@ -401,7 +401,7 @@ public class JSONHandlre {
 
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("hhh Says:", "ReferralFolderMarginAdd():"+ e.toString());
                 }
@@ -802,7 +802,7 @@ public class JSONHandlre {
 
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("hhh Says:", "GetNewsCategories():"+ e.toString());
                 }
@@ -868,7 +868,7 @@ public class JSONHandlre {
                 super.onPostExecute(s);
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("GetProvincesList Says:", "create bank in get margin"+ e.toString());
                 }
@@ -935,7 +935,7 @@ public class JSONHandlre {
                 super.onPostExecute(s);
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("GetCitiesList Says:", "create bank in city"+ e.toString());
                 }
@@ -1001,7 +1001,7 @@ public class JSONHandlre {
                 super.onPostExecute(s);
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("GetNewsReporters Says:", "create bank in NewsReporters"+ e.toString());
                 }
@@ -1083,7 +1083,7 @@ public class JSONHandlre {
 
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
                 }catch (Exception e){
                     Log.i("hhh Says:", "UserReferralFolderRememberMargin():"+ e.toString());
                 }
@@ -1156,7 +1156,7 @@ public class JSONHandlre {
 
                 myDBHelper = new MYSQlDBHelper(myCONTEXT);
                 try {
-                    myDBHelper.CreateDataBase();
+                    myDBHelper.getWritableDatabase();
 
                 }catch (Exception e){
                     Log.i("hhh Says:", "UserLogin():"+ e.toString());
@@ -1269,10 +1269,6 @@ public class JSONHandlre {
                     "لطفا اتصال اینترنت را بررسی نمایید." , Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
-
-            /*MainTitrAlertDialog.setMessage("لطفا اتصال اینترنت را بررسی نمایید.");
-            AlertDialog al = MainTitrAlertDialog.create();
-            al.show();*/
         }
         return flag;
     }

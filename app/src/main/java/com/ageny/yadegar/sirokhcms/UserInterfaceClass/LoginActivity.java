@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
          mysQlDBHelper = new MYSQlDBHelper(getApplicationContext());
 
         try {
-            mysQlDBHelper.CreateDataBase();
+            mysQlDBHelper.getWritableDatabase();
             userDataModelClass = mysQlDBHelper.GetCurrentUser();
             Log.i("hhh Saved user login:", "Loged IN "+ userDataModelClass.getIs_logedin());
 
@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     mysQlDBHelper = new MYSQlDBHelper(getApplicationContext());
                     try {
-                        mysQlDBHelper.CreateDataBase();
+                        mysQlDBHelper.getWritableDatabase();
 
                     }catch (Exception e){
                         Log.i("hhh Says:", "UserLogin():"+ e.toString());
