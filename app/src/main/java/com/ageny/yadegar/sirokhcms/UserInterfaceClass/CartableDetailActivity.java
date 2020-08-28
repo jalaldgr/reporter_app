@@ -163,13 +163,22 @@ public class CartableDetailActivity extends AppCompatActivity {
                     break;
                 case "3":
                     textViewUrgency.setText("انجام شده");
+                    textViewUrgency.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_eye,0);
+                    textViewUrgency.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Cntx, ShowPrenewsActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("userid",UID );
+                            intent.putExtra("cartableid",RID );
+                            Cntx.startActivity(intent);
+                        }
+                    });
                     break;
 
             }
             textViewNewsType.setText(RNTT.toString());
-         //   startinterview.setText(Ur.get);
-//            startinterview.setText();
-//            stopinterview.setText();
+
 
         final AlertDialog.Builder InfoAlertDialog =new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
 
@@ -354,7 +363,7 @@ public class CartableDetailActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ERROR ShowReferralFolder: "+ex.toString());
                 }
-                textViewSubject.setText((Ur.getSubject().toString().equals(null)) ? Ur.getSubject() : "بدون عنوان");
+                textViewSubject.setText(Ur.getSubject());
                 textViewDescription.setText( (Ur.getDescription().toString().equals(null)) ? Ur.getDescription() :"بدون توضیحات" );
                 textViewOrgan.setText(Ur.getOrgan_Title());
                 textViewPeople.setText(Ur.getPeople_first_name() + " " + Ur.getPeople_last_name());
@@ -495,9 +504,6 @@ public class CartableDetailActivity extends AppCompatActivity {
         ReferralFolderEndInterview TM = new ReferralFolderEndInterview();
         TM.execute();
     }
-
-
-
     public void GetPreNews(  String RefferalID) {
         final String ParamRID = RefferalID;
 
@@ -519,8 +525,9 @@ public class CartableDetailActivity extends AppCompatActivity {
                     Log.d("hhh", " GetPreNews: try "+ s);
                     JSONObject obj = new JSONObject(s);
                     //if no error in response
-                    if (!obj.get("Data").toString().equals(null)) {
+                    if (obj.get("Data").toString() != null) {
                         JSONObject kk = new JSONObject(obj.get("Data").toString());
+
                         PersianDateFormat persianDateFormat=new PersianDateFormat("yyyy-MM-dd HH:mm:ss");
                         PersianDate pdatestart,pdatestop;
 

@@ -32,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ageny.yadegar.sirokhcms.DataModelClass.CitiesDataModelClass;
+import com.ageny.yadegar.sirokhcms.DataModelClass.NewsCategoriesDataModel;
 import com.ageny.yadegar.sirokhcms.DataModelClass.PreNewsUpdateDataModelClass;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
@@ -65,7 +67,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class SubmitInformationActivity extends AppCompatActivity {
-
+    String TAG = "hhh";
     String JsonResult,UID,RID,RSID=null;
     public Context Cntx;
     MYSQlDBHelper mysQlDBHelper;
@@ -82,6 +84,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
     TextView news_content_txt_in_code;
     TextView news_summary_Txt;
     TextView citytxt;
+    TextView ReporterTxt;
     String SelectedResult;
     private int RESULT_LOAD_IMAGE=1;
      int checkedcategory=0;
@@ -124,8 +127,8 @@ public class SubmitInformationActivity extends AppCompatActivity {
         final AlertDialog.Builder MainDialogAlertDialog =new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
         final AlertDialog.Builder ReportersDialogAlertDialog =new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
 
-        preNewsUpdateDataModelClass.setSub_Title(null);
-        preNewsUpdateDataModelClass.setTop_Title(null);
+        preNewsUpdateDataModelClass.setSub_Title(" ");
+        preNewsUpdateDataModelClass.setTop_Title(" ");
         preNewsUpdateDataModelClass.setNews_MainPic_File(null);
 
         MainTitrTxt = (TextView) findViewById(R.id.news_main_titr_textview);
@@ -157,7 +160,9 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         View customLayout = getLayoutInflater().inflate(R.layout.main_titr_popup_layout ,null);
 
                         MainTitrTxt.setText(editText.getText());
-                        preNewsUpdateDataModelClass.setTop_Title(editText.getText().toString());
+                        preNewsUpdateDataModelClass.setTop_Title(
+                                (!editText.getText().toString().equals(null))? editText.getText().toString() : " "
+                                );
                     }
                 });
                 MainTitrAlertDialog.setNegativeButton("انصراف" , null);
@@ -219,7 +224,9 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         View customLayout = getLayoutInflater().inflate(R.layout.main_titr_popup_layout ,null);
 
                         SubTitrTxt.setText(PopUpTxt.getText());
-                        preNewsUpdateDataModelClass.setSub_Title(SubTitrTxt.getText().toString());
+                        preNewsUpdateDataModelClass.setSub_Title(
+                                (!SubTitrTxt.getText().toString().equals(null))? SubTitrTxt.getText().toString():" "
+                        );
                     }
                 });
                 MainTitrAlertDialog.setNegativeButton("انصراف" , null);
@@ -240,27 +247,29 @@ public class SubmitInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //----------------------------------------------------------------
-                List<String> stringList = mysQlDBHelper.GetALLNewsCategoriesList();
+                String [][]StrArray = null;
+
+                StrArray = mysQlDBHelper.GetALLNewsCategoriesList();
 
                 MainDialogAlertDialog.setTitle("سرویس خبری");
-                CharSequence[] ListArray = new CharSequence[stringList.size()];
-                for(int i = 0; i < stringList.size(); i++){
-                    ListArray[i] = stringList.get(i).toString();
+                CharSequence[] ListArray = new CharSequence[StrArray.length];
+                for(int i = 0; i < StrArray.length; i++){
+                    ListArray[i] = StrArray[i][1];
                 }
 
+                final String[][] finalStrArray = StrArray;
+                final String[][] finalStrArray1 = StrArray;
                 MainDialogAlertDialog.setSingleChoiceItems(ListArray, checkedcategory, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         CategoriTxt = (TextView) findViewById(R.id.news_categori_textView);
-                        CategoriTxt.setText(SelectedResult);
                         ListView lw = ((AlertDialog)dialog).getListView();
                         Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                         SelectedResult=checkedItem.toString();
                         CategoriTxt.setText(SelectedResult);
                         checkedcategory = lw.getCheckedItemPosition();
-                        preNewsUpdateDataModelClass.setNews_Category_Id(Integer.toString(
-                                lw.getCheckedItemPosition()+1
-                        ));
+                        preNewsUpdateDataModelClass.setNews_Category_Id(finalStrArray1[checkedcategory][0]);
+                        Log.d(TAG, "onClick CatId: "+preNewsUpdateDataModelClass.getNews_Category_Id());
                         dialog.dismiss();
                     }
                 });
@@ -279,44 +288,48 @@ public class SubmitInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //----------------------------------------------------------------
-                List<String> stringList = mysQlDBHelper.GetProvincesList();
-
+                String [][]StrArray = null;
+                StrArray = mysQlDBHelper.GetProvincesList();
                 MainDialogAlertDialog.setTitle("استان");
-                CharSequence[] ListArray = new CharSequence[stringList.size()];
-                for(int i = 0; i < stringList.size(); i++){
-                    ListArray[i] = stringList.get(i).toString();
+                CharSequence[] ListArray = new CharSequence[StrArray.length];
+                for(int i = 0; i < StrArray.length; i++){
+                    ListArray[i] = StrArray[i][1];
                 }
 
-                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedprovince, new DialogInterface.OnClickListener() {
+                final String[][] finalStrArray = StrArray;
+                MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedprovince,   new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CategoriTxt = (TextView) findViewById(R.id.news_province_textView);
-                        CategoriTxt.setText(SelectedResult);
                         ListView lw = ((AlertDialog)dialog).getListView();
                         Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                         SelectedResult=checkedItem.toString();
                         CategoriTxt.setText(SelectedResult);
                         checkedprovince = lw.getCheckedItemPosition();
-                        preNewsUpdateDataModelClass.setProvince_Id(Integer.toString(
-                                lw.getCheckedItemPosition()+1
-                        ));
-                        List<String> citystringList = mysQlDBHelper.GetCitiesList(preNewsUpdateDataModelClass.getProvince_Id());
-                        if (citystringList.size()>0){
+                        preNewsUpdateDataModelClass.setProvince_Id(finalStrArray[checkedprovince][0]);
+                        Log.d(TAG, "onClick province Id: "+preNewsUpdateDataModelClass.getProvince_Id());
+
+                        String[][] citystringList =null;
+
+                        citystringList = mysQlDBHelper.GetCitiesList(preNewsUpdateDataModelClass.getProvince_Id());
+                        if (citystringList.length>0){
                             news_city_layout_in_code.setEnabled(true);
                             citytxt.setEnabled(true);
-                            citytxt.setText(citystringList.get(0));
-                            preNewsUpdateDataModelClass.setCity_Id("1");
+                            citytxt.setText(citystringList[0][1]);
+                            preNewsUpdateDataModelClass.setCity_Id(citystringList[0][0]);
+                            Log.d(TAG, "onClickcitiid: "+citystringList[0][0]);
                         }else{
                             news_city_layout_in_code.setEnabled(false);
                             citytxt.setEnabled(false);
-                            citytxt.setText(" ");
-                            preNewsUpdateDataModelClass.setCity_Id(" ");
+                            citytxt.setText("طبقه بندی نشده");
+                            preNewsUpdateDataModelClass.setCity_Id("1");
 
                         }
                         dialog.dismiss();
 
                     }
                 });
+                preNewsUpdateDataModelClass.setProvince_Id(StrArray[checkedprovince][0]);
                 final AlertDialog al = MainDialogAlertDialog.create();
                 al.show();
                 //----------------------------------------------------------------
@@ -330,33 +343,30 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 //----------------------------------------------------------------
                 String [][]StrArray = null;
                 StrArray = mysQlDBHelper.GetNewsReportersList();
-                Log.d("hhh reporters", StrArray[1][0]);
-
                 ReportersDialogAlertDialog.setTitle("خبرنگار");
                 CharSequence[] ListArray = new CharSequence[StrArray.length];
                 for(int i = 0; i < StrArray.length; i++){
 
                     ListArray[i] = StrArray[i][0];
-                    Log.d("hhh reporters", StrArray[i][0]+StrArray[i][1]);
-
                 }
+                final String[][] finalStrArray = StrArray;
                 ReportersDialogAlertDialog.setSingleChoiceItems(ListArray,checkedreporter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        CategoriTxt = (TextView) findViewById(R.id.news_person_textView);
-                        CategoriTxt.setText(SelectedResult);
+                        ReporterTxt = (TextView) findViewById(R.id.news_person_textView);
+                        ReporterTxt.setText(SelectedResult);
                         ListView lw = ((AlertDialog) dialog).getListView();
                         Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                         SelectedResult = checkedItem.toString();
-                        CategoriTxt.setText(SelectedResult);
-                        checkedprovince = lw.getCheckedItemPosition();
-
+                        ReporterTxt.setText(SelectedResult);
                         checkedreporter = lw.getCheckedItemPosition();
                         dialog.dismiss();
+                        preNewsUpdateDataModelClass.setReporter_Id(finalStrArray[checkedreporter][1] );
+                        Log.d(TAG, "onClick reporter is:"+preNewsUpdateDataModelClass.getReporter_Id());
 
                     }
                 });
-                 preNewsUpdateDataModelClass.setUser_Id(StrArray [checkedreporter][1] );
+                 preNewsUpdateDataModelClass.setReporter_Id(StrArray [checkedreporter][1] );
                 final AlertDialog al = ReportersDialogAlertDialog.create();
                 al.show();
             }
@@ -368,17 +378,17 @@ public class SubmitInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //----------------------------------------------------------------
-                List<String> stringList = mysQlDBHelper.GetCitiesList(preNewsUpdateDataModelClass.getProvince_Id());
-
+                String [][]StrArray = null;
+                StrArray = mysQlDBHelper.GetCitiesList(preNewsUpdateDataModelClass.getProvince_Id());
                 MainDialogAlertDialog.setTitle("شهر");
-                CharSequence[] ListArray = new CharSequence[stringList.size()];
+                CharSequence[] ListArray = new CharSequence[StrArray.length];
 
-                for(int i = 0; i < stringList.size(); i++){
+                for(int i = 0; i < StrArray.length; i++){
 
-                    ListArray[i] = stringList.get(i).toString();
+                    ListArray[i] = StrArray[i][1];
                 }
-                Log.d("ttt",Integer.toString(stringList.size()));
 
+                final String[][] finalStrArray = StrArray;
                 MainDialogAlertDialog.setSingleChoiceItems(ListArray,checkedcity, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -388,14 +398,14 @@ public class SubmitInformationActivity extends AppCompatActivity {
                         Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                         SelectedResult=checkedItem.toString();
                         citytxt.setText(SelectedResult);
-                        checkedcity = lw.getCheckedItemPosition();
-                        preNewsUpdateDataModelClass.setCity_Id(Integer.toString(
-                                lw.getCheckedItemPosition()+1
-                        ));
-                        dialog.dismiss();
+                        checkedcity=lw.getCheckedItemPosition();
+                        preNewsUpdateDataModelClass.setCity_Id(finalStrArray[checkedcity][0]);
+                        Log.d(TAG, "onClick Selected City:"+preNewsUpdateDataModelClass.getCity_Id());
 
+                        dialog.dismiss();
                     }
                 });
+                preNewsUpdateDataModelClass.setCity_Id(StrArray[checkedcity][0]);
                 final AlertDialog al = MainDialogAlertDialog.create();
                 al.show();
             }
@@ -407,6 +417,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //----------------------------------------------------------------
+                MainDialogAlertDialog.setTitle("نوع مدرک");
 
                 MainDialogAlertDialog.setSingleChoiceItems(R.array.SubmitInformationNewsType,checkednewstyp, new DialogInterface.OnClickListener() {
                     @Override
@@ -507,6 +518,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
                 if (!preNewsUpdateDataModelClass.isanyUnset()) {
                     PreNewsUpdate( preNewsUpdateDataModelClass);
                 }else{
+                    Log.d("hhh", "preNewsUpdateDataModelClass: "+preNewsUpdateDataModelClass.toString());
                     Toast toast= Toast.makeText(Cntx,
                             "لطفا فیلدهای ستاره دار را پر کنید", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -608,10 +620,11 @@ public class SubmitInformationActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {
+                    Log.d("hhh", "onPostExecute:resposne "+s);
                     JSONObject obj = new JSONObject(s);
                     if (obj.getInt("State")>0) {
                         JsonResult = "خبر با موفقیت ارسال شد.";
-                        Log.d("hhh", "onPostExecute: " + s.toString());
+                        Log.d("hhh", "onPostExecute: " + s);
 
                         Intent intent= new Intent(Cntx, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -619,24 +632,16 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     }
                     else {
                         JsonResult = "خطا در ارسال اطلاعات";
-                        Log.d("hhh", "onPostExecute: " + s.toString());
+                        Log.d("hhh", "onPostExecute: " + s);
                         news_submit_button_in_code.setEnabled(true);
                     }
                 } catch (Exception e) {
                     Log.d("hhh", "PreNewsUpdate EEEnd cacht: "+e.toString());
-                    e.printStackTrace();JsonResult = "CATCH " + e.toString();
+                    e.printStackTrace();
                     news_submit_button_in_code.setEnabled(true);
 
                 }
                 if(dialog.isShowing())this.dialog.dismiss();
-                Toast toast= Toast.makeText(Cntx,
-                        JsonResult, Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-                ViewGroup group = (ViewGroup) toast.getView();
-                TextView messageTextView = (TextView) group.getChildAt(0);
-                messageTextView.setTextSize(18);
-                toast.show();
-
             }
 
             @Override
@@ -645,36 +650,32 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     HttpClient client = new DefaultHttpClient();
                     HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getPreNewsUpdateURL());
                     Charset utf8 = Charset.forName("UTF-8");
-                    //MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, utf8);
                     MultipartEntityBuilder entity = MultipartEntityBuilder.create()
                             .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
                             .setCharset(utf8);
                     entity.addTextBody("UID",ParamPreNews.getUser_Id());
                     entity.addTextBody("RID",ParamPreNews.getReferral_Id());
-                    entity.addTextBody("news_category_id", ParamPreNews.getNews_Category_Id());
-                    entity.addTextBody("news_type_id", ParamPreNews.getNews_Type_Id());
-                    entity.addTextBody("province_id", ParamPreNews.getProvince_Id());
-                    entity.addTextBody("city_id",ParamPreNews.getCity_Id());
+                    entity.addTextBody("NewsCategoryID", ParamPreNews.getNews_Category_Id());
+                    entity.addTextBody("NewsTypeID", ParamPreNews.getNews_Type_Id());
+                    entity.addTextBody("ProvinceID", ParamPreNews.getProvince_Id());
+                    entity.addTextBody("CityID",ParamPreNews.getCity_Id());
+                    entity.addTextBody("NewsReporterID",ParamPreNews.getReporter_Id());
                     if(preNewsUpdateDataModelClass.getNews_MainPic_File()!=null){
-                        final File image = new File(ParamPreNews.getNews_MainPic_File());  //get the actual file from the device
+                        final File image = new File(ParamPreNews.getNews_MainPic_File());
                         entity.addPart("fileupload", new FileBody(image));}
                     entity.addPart("MainContent",new StringBody( ParamPreNews.getMainContent(),utf8));
                     entity.addPart("NewsTitle",new StringBody(ParamPreNews.getNews_Title(),utf8));
-                    if(preNewsUpdateDataModelClass.getTop_Title()!=null){
-                    entity.addPart("TopTitle",new StringBody(ParamPreNews.getTop_Title(),utf8));}
-                    if (preNewsUpdateDataModelClass.getSub_Title()!=null){
-                    entity.addPart("BottomTitle",new StringBody(ParamPreNews.getSub_Title(),utf8));}
+                    entity.addPart("TopTitle",new StringBody(ParamPreNews.getTop_Title(),utf8));
+                    entity.addPart("BottomTitle",new StringBody(ParamPreNews.getSub_Title(),utf8));
                     entity.addPart("ContentSummary",new StringBody(ParamPreNews.getNews_Summary(),utf8));
-
                     HttpEntity httpmultypartEntity = entity.build();
                     poster.setEntity(httpmultypartEntity);
-                   //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Log.d("hhh refferal image path", image.getAbsolutePath());
 
                     return client.execute(poster, new ResponseHandler<Object>() {
                         public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                             HttpEntity respEntity = response.getEntity();
                             String responseString = EntityUtils.toString(respEntity);
-
+                            Log.d("hhh", "handleResponse: "+responseString);
                             return responseString;
                         }
                     }).toString();

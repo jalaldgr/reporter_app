@@ -7,40 +7,39 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
+        android:name=".Calligraphy"
         android:allowBackup="true"
         android:icon="@mipmap/ic_app_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".Calligraphy"
         android:theme="@style/Theme.AppCompat.Light">
-        <service android:name=".update.DownloadService"></service>
-<!--        <activity android:name=".UserInterfaceClass.SubmitInformationMainTitrPopupActivity"></activity>-->
-        <activity android:name=".UserInterfaceClass.AddAttachmentActivity"></activity>
+        <activity android:name=".UserInterfaceClass.ShowPrenewsActivity"></activity>
+
+        <service android:name=".update.DownloadService" /> <!-- <activity android:name=".UserInterfaceClass.SubmitInformationMainTitrPopupActivity"></activity> -->
+        <activity android:name=".UserInterfaceClass.AddAttachmentActivity" />
         <activity android:name=".UserInterfaceClass.AddMarginActivity" />
         <activity android:name=".UserInterfaceClass.Attachments_activity" />
-        <activity android:name=".UserInterfaceClass.SubmitInformationActivity"
+        <activity
+            android:name=".UserInterfaceClass.SubmitInformationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".UserInterfaceClass.MarginsActivity" />
         <activity android:name=".UserInterfaceClass.ReturnReferralActivity" />
         <activity android:name=".UserInterfaceClass.CartableDetailActivity" />
         <activity android:name=".UserInterfaceClass.LoginActivity" />
         <activity android:name=".UserInterfaceClass.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".UserInterfaceClass.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-
                 <category android:name="android.intent.category.OPENABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 

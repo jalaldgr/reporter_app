@@ -55,7 +55,9 @@ public class CartableFragment extends Fragment {
         try {
             myDBHelper.CreateDataBase();
             crrntUser = myDBHelper.GetCurrentUser();
-            LoadCartable(crrntUser.getId());
+            LoadCartable lc = new LoadCartable();
+            lc.execute();
+
         }catch (Exception e){
             Log.i("hhh load cartable Says:", e.toString());
         }
@@ -84,10 +86,10 @@ public class CartableFragment extends Fragment {
 
 
 ///////////////////////////JSON Method/////////////////////////////////////////////////////////////////////
-public  void LoadCartable( String UserID) {
-    final String ParamUID = UserID;
 
     class LoadCartable extends AsyncTask<Void, Void, String> {
+        final String ParamUID = crrntUser.getId();
+
         private final ProgressDialog dialog = new ProgressDialog(CartableFragment.this.getContext());
 
         @Override
@@ -171,10 +173,9 @@ public  void LoadCartable( String UserID) {
         }
     }
 
-    LoadCartable lc = new LoadCartable();
-    lc.execute();
+
     //Log.d("hhh YYYYY: " , Integer.toString(ReturnList.size()));
-}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

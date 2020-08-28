@@ -18,14 +18,16 @@ public class PreNewsUpdateDataModelClass {
     String Province_Id;
     String City_Id;
     String MainContent;
-
+    String Reporter_Id;
     public PreNewsUpdateDataModelClass() {
 
     }
 
+
+
     public PreNewsUpdateDataModelClass(String user_Id, String referral_Id, String news_Title, String news_MainPic_File, String top_Title, String sub_Title, String news_Summary,
 
-                                       String news_Category_Id, String news_Type_Id, String province_Id, String city_Id, String mainContent) {
+                                       String news_Category_Id, String news_Type_Id, String province_Id, String city_Id, String mainContent,String reporter_Id) {
         this.User_Id = user_Id;
         this.Referral_Id = referral_Id;
         this.News_Title = news_Title;
@@ -38,6 +40,7 @@ public class PreNewsUpdateDataModelClass {
         this.Province_Id = province_Id;
         this.City_Id = city_Id;
         this.MainContent = mainContent;
+        this.Reporter_Id = reporter_Id;
     }
 
 
@@ -137,6 +140,14 @@ public class PreNewsUpdateDataModelClass {
         MainContent = mainContent;
     }
 
+    public String getReporter_Id() {
+        return Reporter_Id;
+    }
+
+    public void setReporter_Id(String reporter_Id) {
+        Reporter_Id = reporter_Id;
+    }
+
     public ArrayList<String> getallrecords(){
             ArrayList<String> ReturnList=new ArrayList<String>() {{
             add(getUser_Id());
@@ -151,6 +162,7 @@ public class PreNewsUpdateDataModelClass {
             add(getProvince_Id());
             add(getCity_Id());
             add(getMainContent());
+            add(getReporter_Id());
             }};
             ////////////Return All variable in String List////////////////
         return ReturnList;
@@ -169,6 +181,27 @@ public class PreNewsUpdateDataModelClass {
         if (Province_Id == null) return true;
         if (City_Id == null) return true;
         if (MainContent == null) return true;
+        if (Reporter_Id == null) return true;
+
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "PreNewsUpdateDataModelClass{" +
+                "User_Id='" + User_Id + '\'' +
+                ", Referral_Id='" + Referral_Id + '\'' +
+                ", News_Title='" + News_Title + '\'' +
+                ", News_MainPic_File='" + News_MainPic_File + '\'' +
+                ", Top_Title='" + Top_Title + '\'' +
+                ", Sub_Title='" + Sub_Title + '\'' +
+                ", News_Summary='" + News_Summary + '\'' +
+                ", News_Category_Id='" + News_Category_Id + '\'' +
+                ", News_Type_Id='" + News_Type_Id + '\'' +
+                ", Province_Id='" + Province_Id + '\'' +
+                ", City_Id='" + City_Id + '\'' +
+                ", MainContent='" + MainContent + '\'' +
+                ", Reporter_Id='" + Reporter_Id + '\'' +
+                '}';
     }
 }

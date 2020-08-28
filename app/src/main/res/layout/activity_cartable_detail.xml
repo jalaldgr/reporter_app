@@ -39,12 +39,15 @@
                         android:layout_weight="0.35"
                         android:drawablePadding="2dp"
                         android:gravity="center_vertical"
-                        android:text="@string/subject_cartable_detail" />
+                        android:text="@string/subject_cartable_detail"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/CartableDetailSubjectTxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,9 +158,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
 
-                        />
+                        android:gravity="center_vertical" />
                 </LinearLayout>
 
                 <LinearLayout

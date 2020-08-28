@@ -120,17 +120,20 @@ public class UserReferralDataModel  {
         String news_type_title=news_type_id;
         switch (news_type_title){
             case    "1":
-                news_type_title= "تولیدی";
+                news_type_title= "پوششی";
                 break;
             case   "2":
-                news_type_title="پوششی";
+                news_type_title="تولیدی";
                 break;
             case    "3":
-                news_type_title="ارسالی";
+                news_type_title="دریافتی";
                 break;
             case    "4":
-                news_type_title="نقلی";
+                news_type_title="ارسالی";
                 break;
+            case "5":
+                news_type_title= "نقلی";
+
 
         }
         return news_type_title;

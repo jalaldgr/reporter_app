@@ -3,6 +3,7 @@ package com.ageny.yadegar.sirokhcms;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -20,6 +21,7 @@ import com.ageny.yadegar.sirokhcms.DataModelClass.PreNewsUpdateDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.ProvincesDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
+import com.mohamadamin.persianmaterialdatetimepicker.Utils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,13 +53,20 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
     private Context mCtx = null;
 
     public MYSQlDBHelper(Context context) {
-        super(context, DB_NAME, null, 2);
+        super(context, DB_NAME, null, 1);
         if(Build.VERSION.SDK_INT >= 17){
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         }else {
             DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         }
         mCtx = context;
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+
+        db.disableWriteAheadLogging();
     }
 
     private boolean CheckDataBase(){
@@ -104,6 +113,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
 
         }else {
             this.getReadableDatabase();
+            this.close();
             try {
                 CopyDataBase();
             }catch (Exception e){
@@ -223,11 +233,11 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         return TempList;
     }
 
-    public void UpdateUserRefferal(ContentValues cv, String ConditionStr){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.update(CitiesDataModel_Table_Name, cv, ConditionStr, null );
-        db.close();
-    }
+//    public void UpdateUserRefferal(ContentValues cv, String ConditionStr){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.update(CitiesDataModel_Table_Name, cv, ConditionStr, null );
+//        db.close();
+//    }
 
 
 
@@ -391,7 +401,9 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
                         (c.getString(8)),
                         (c.getString(9)),
                         (c.getString(10)),
-                        (c.getString(11)));
+                        (c.getString(11)),
+                        (c.getString(12))
+                );
 
                 TempList = pr;
             }while (c.moveToNext());
@@ -443,15 +455,16 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         return TempList;
     }
 
-    public List<String> GetProvincesList(){
-        List<String> TempList=new ArrayList<String>();
+    public String[][] GetProvincesList(){
         SQLiteDatabase db = this.getWritableDatabase();
-
+        String[][] Str=null;
         Cursor c;
         try {
             c = db.rawQuery("SELECT * FROM Provinces ", null);
             if (c == null)
                 return null;
+            Str = new String[c.getCount()][2];
+            int counter = 0;
             c.moveToFirst();
             do{
                 ProvincesDataModelClass pr =  new ProvincesDataModelClass(
@@ -460,12 +473,14 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
                         (c.getString(2)),
                         (c.getString(3)));
 
-                TempList.add(c.getString(1));
+                Str[counter][0]=c.getString(0);
+                Str[counter][1]=c.getString(1);
+                counter++;
             }while (c.moveToNext());
             c.close();
         }catch (Exception e){Log.i("Get Provinces Says:", e.toString());}
         db.close();
-        return TempList;
+        return Str;
     }
 
 
@@ -488,7 +503,6 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
     }
 
     public String[][] GetNewsReportersList(){
-        //ArrayList<String> TempList=new ArrayList<String>();
         SQLiteDatabase db = this.getWritableDatabase();
 
         String[][]str = null;
@@ -503,7 +517,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
             int counter = 0;
             c.moveToFirst();
             do{
-                Log.i("Get NewsReporters Log:", c.toString());
+                Log.i("hhh","Get NewsReporters Log:"+ c.toString());
                 NewsReportersDataModelClass pr =  new NewsReportersDataModelClass(
                         (c.getString(0)),
                         (c.getString(1)),
@@ -543,7 +557,35 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<String> GetCitiesList(String Province_ID){
+    public String[][] GetCitiesList(String Province_ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[][]str = null;
+        Cursor c;
+        try {
+            c = db.rawQuery("SELECT * FROM Cities WHERE Province_ID = " + Province_ID, null);
+
+            if (c == null)
+                return null;
+            str = new String[c.getCount()][2];
+            int counter = 0;
+            c.moveToFirst();
+            do{
+                Log.i("Get Cities Says:", c.toString());
+                CitiesDataModelClass pr =  new CitiesDataModelClass(
+                        (c.getString(0)),
+                        (c.getString(1)),
+                        (c.getString(2)));
+                str[counter][0] = c.getString(0);
+                str[counter][1] = c.getString(1);
+                counter++;
+            }while (c.moveToNext());
+            c.close();
+        }catch (Exception e){Log.i("Get Cities Says:", e.toString());}
+        db.close();
+        return str;
+    }
+
+    public List<String> GetCitiesIDList(String Province_ID){
         List<String> TempList=new ArrayList<String>();
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -559,8 +601,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
                         (c.getString(0)),
                         (c.getString(1)),
                         (c.getString(2)));
-
-                TempList.add(c.getString(1));
+                TempList.add(c.getString(0));
             }while (c.moveToNext());
             c.close();
         }catch (Exception e){Log.i("Get Cities Says:", e.toString());}
@@ -585,13 +626,13 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<NewsCategoriesDataModel> GetALLNewsCategories(String Id){
-         ArrayList<NewsCategoriesDataModel> TempList=new ArrayList<NewsCategoriesDataModel>();
+    public NewsCategoriesDataModel GetNewsCategorieById(String Id){
+        NewsCategoriesDataModel TempList=null;
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor c;
         try {
-            c = db.rawQuery("SELECT * FROM NewsCategories", null);
+            c = db.rawQuery("SELECT * FROM NewsCategories WHERE Id="+Id, null);
             if (c == null)
                 return null;
             c.moveToFirst();
@@ -600,7 +641,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
                         (c.getString(0)),
                         (c.getString(1)));
 
-                TempList.add(pr);
+                TempList=pr;
             }while (c.moveToNext());
             c.close();
         }catch (Exception e){Log.i("Get NewsCategors Says:", e.toString());}
@@ -609,29 +650,33 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         return TempList;
     }
 
-    public List<String> GetALLNewsCategoriesList(){
-        List<String> TempList=new ArrayList<String>();
+    public String[][] GetALLNewsCategoriesList(){
         SQLiteDatabase db = this.getWritableDatabase();
+        String[][]str = null;
 
         Cursor c;
         try {
             c = db.rawQuery("SELECT * FROM NewsCategories", null);
             if (c == null)
                 return null;
+            str = new String[c.getCount()][2];
+            int counter = 0;
             c.moveToFirst();
             do{
                 NewsCategoriesDataModel pr =  new NewsCategoriesDataModel(
                         (c.getString(0)),
                         (c.getString(1).toString()));
                 Log.i("Get NewsCategors hhh:",c.getString(1));
-                TempList.add(c.getString(1));
+                str[counter][0]=c.getString(0);
+                str[counter][1]=c.getString(1);
+                counter++;
             }while (c.moveToNext());
             c.close();
         }catch (Exception e){Log.i("Get NewsCategors Says:", e.toString());}
 
         db.close();
 
-        return TempList;
+        return str;
     }
 
     public Cursor GetALLNewsCategoriesCursor(){
@@ -662,13 +707,13 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-   /* public NewsCategoriesDataModel GetNewsCategoriesByID(String Id){
+    public NewsCategoriesDataModel GetNewsCategoriesByTitle(String Title){
         NewsCategoriesDataModel TempList=null;
         SQLiteDatabase db = this.getWritableDatabase();
-
         Cursor c;
         try {
-            c = db.rawQuery("SELECT * FROM PreNews WHERE NewsCategories = "+Id, null);
+            c = db.rawQuery("SELECT * FROM NewsCategories WHERE Title='"+Title+"'", null);
+            Log.d("hhh", "GetCitiesIDList: "+DatabaseUtils.dumpCursorToString(c));
             if (c == null)
                 return null;
             c.moveToFirst();
@@ -684,7 +729,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
 
         db.close();
         return TempList;
-    }*/
+    }
 
     /////////////////////////////////////////////////////
     /////////////Margins Table Handler///////////////////
@@ -706,6 +751,7 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
 
     public UserDataModelClass GetCurrentUser(){
         UserDataModelClass TempList=null;
+        this.close();
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor c;
