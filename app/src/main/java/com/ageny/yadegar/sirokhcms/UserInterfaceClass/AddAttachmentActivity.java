@@ -38,6 +38,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -101,15 +103,15 @@ public class AddAttachmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent2 = new Intent().setType("*/*").setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent2, "Select a file"), 123);
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
 
                     // Should we show an explanation?
                     if (shouldShowRequestPermissionRationale(
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         // Explain to the user why we need to read the contacts
                     }
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                     return;
                 }
@@ -245,7 +247,10 @@ public class AddAttachmentActivity extends AppCompatActivity {
                     HttpEntity multypartentity = entity.build();
                     poster.setEntity(multypartentity);
                     Log.d("hhh" ," upload image path"+ image.getAbsolutePath() );
-
+                    //Important for android version 9 pie/
+                    client.getConnectionManager().getSchemeRegistry().register(
+                            new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+                    );
                     return client.execute(poster, new ResponseHandler<Object>() {
                         public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                             HttpEntity respEntity = response.getEntity();

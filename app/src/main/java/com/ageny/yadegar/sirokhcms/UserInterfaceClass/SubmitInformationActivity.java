@@ -47,6 +47,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -483,12 +485,12 @@ public class SubmitInformationActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     }
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                     return;
                 }
@@ -671,6 +673,10 @@ public class SubmitInformationActivity extends AppCompatActivity {
                     HttpEntity httpmultypartEntity = entity.build();
                     poster.setEntity(httpmultypartEntity);
 
+                    //Important for android version 9 pie/
+                    client.getConnectionManager().getSchemeRegistry().register(
+                            new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+                    );
                     return client.execute(poster, new ResponseHandler<Object>() {
                         public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                             HttpEntity respEntity = response.getEntity();

@@ -148,12 +148,12 @@ public class Attachments_activity extends AppCompatActivity {
                     this.dialog.dismiss();
 
                 }
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     }
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             AddAttachmentActivity.PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                     return;
                 }
