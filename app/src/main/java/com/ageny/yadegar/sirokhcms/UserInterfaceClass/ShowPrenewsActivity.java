@@ -183,7 +183,9 @@ public class ShowPrenewsActivity extends AppCompatActivity {
                         String [][]reporterlist =mysQlDBHelper.GetNewsReportersList();
                         reportertxt.setText(getprenews.getFirst_name()+" "+getprenews.getLast_name());
                         summarytxt.setText(getprenews.getContentSummary());
-                        contenttxt.setText(getprenews.getMainContent());
+                        contenttxt.setText(
+                                (!getprenews.getMainContent().equals(null))?getprenews.getMainContent():" "
+                        );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ERROR GetPreNews: "+ex.toString());

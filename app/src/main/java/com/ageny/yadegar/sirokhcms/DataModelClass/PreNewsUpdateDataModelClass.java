@@ -180,7 +180,7 @@ public class PreNewsUpdateDataModelClass {
         if (News_Type_Id == null) return true;
         if (Province_Id == null) return true;
         if (City_Id == null) return true;
-        if (MainContent == null) return true;
+//        if (MainContent == null) return true;
         if (Reporter_Id == null) return true;
 
         return false;

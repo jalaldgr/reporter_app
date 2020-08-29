@@ -132,6 +132,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
         preNewsUpdateDataModelClass.setSub_Title(" ");
         preNewsUpdateDataModelClass.setTop_Title(" ");
         preNewsUpdateDataModelClass.setNews_MainPic_File(null);
+        preNewsUpdateDataModelClass.setMainContent(" ");
 
         MainTitrTxt = (TextView) findViewById(R.id.news_main_titr_textview);
         TitrTxt = (TextView) findViewById(R.id.news_titr_textView);

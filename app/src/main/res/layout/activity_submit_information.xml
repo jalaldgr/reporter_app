@@ -597,7 +597,7 @@
                     android:id="@+id/news_content_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/SubmitInformationMainContentHint"
+                    android:hint="@string/SubmitInformationMainContent"
                     android:inputType="textMultiLine"
                     android:minHeight="150dp" />
 

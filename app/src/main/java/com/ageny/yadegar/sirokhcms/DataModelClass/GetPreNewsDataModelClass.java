@@ -46,7 +46,7 @@ public class GetPreNewsDataModelClass {
         Title = (!title.equals(null)?title:"ثبت نشده");
         BottomTitle = (!(bottomTitle.equals(null)||bottomTitle=="null"))?bottomTitle:" ";
         ContentSummary = contentSummary;
-        MainContent = (!mainContent.equals(null))?mainContent:"وارد نشده";
+        MainContent = (!(mainContent.equals(null)||mainContent=="null"))?mainContent:" ";
         news_id = (!news_id.equals(null))?news_id:"0";
         Image = (!image.equals(null))?image:"/assets/no-image.png";
         this.news_category_id = (!news_category_id.equals(null))?news_category_id:"0";
