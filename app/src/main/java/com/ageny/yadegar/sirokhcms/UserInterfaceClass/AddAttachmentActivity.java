@@ -63,6 +63,7 @@ import static java.util.Collections.copy;
 
 
 public class AddAttachmentActivity extends AppCompatActivity {
+    static final String TAG="hhh";
     public static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE =1 ;
     Context Cntx;
     String RID,UID=null;
@@ -126,8 +127,10 @@ public class AddAttachmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(selectedfile!=null) {
+
                     if (JSONHandlre.isConnectedtoInternet(getApplicationContext())) {
                         String selectedFilePath = FilePath.getPath(Cntx, selectedfile);
+                        Log.d(TAG, "onClick selected File: "+selectedFilePath);
                         ReferralFolderAttachmentAdd(selectedFilePath, RID, UID, AttachmentDescriptionTxt.getText().toString());
                     }
                 }
@@ -190,6 +193,8 @@ public class AddAttachmentActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                Log.d(TAG, "onPreExecute dialog shows");
+
                 this.dialog.setMessage("ارسال اطلاعات...");
                 this.dialog.setCanceledOnTouchOutside(false);
                  this.dialog.show();
@@ -222,6 +227,7 @@ public class AddAttachmentActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 // String responseString;
                 try {
+                    Log.d(TAG, "doInBackground started");
                     HttpClient client = new DefaultHttpClient();
                     HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL());
                     final File image = new File(ParamReferralFile);
@@ -238,16 +244,18 @@ public class AddAttachmentActivity extends AppCompatActivity {
                     entity.addPart("ReferralFolderFile", new FileBody(image));
                     HttpEntity multypartentity = entity.build();
                     poster.setEntity(multypartentity);
-                    Log.d("hhh upload image path" , image.getAbsolutePath() );
+                    Log.d("hhh" ," upload image path"+ image.getAbsolutePath() );
 
                     return client.execute(poster, new ResponseHandler<Object>() {
                         public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                             HttpEntity respEntity = response.getEntity();
                             String responseString = EntityUtils.toString(respEntity);
+                            Log.d(TAG, "handleResponse response: "+responseString);
                             return responseString;
                         }
                     }).toString();
                 } catch (Exception e){
+                    Log.d("hhh", "doInBackground Exception e: "+e.toString());
                     return e.toString();
                 }
             }

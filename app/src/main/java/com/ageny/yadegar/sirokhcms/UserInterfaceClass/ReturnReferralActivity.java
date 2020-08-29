@@ -155,9 +155,12 @@ public class ReturnReferralActivity extends AppCompatActivity {
                 TextView messageTextView = (TextView) group.getChildAt(0);
                 messageTextView.setTextSize(18);
                 toast.show();
+                if (this.dialog.isShowing())this.dialog.dismiss();
 
                 finish();
-                if (this.dialog.isShowing())this.dialog.dismiss();
+                Intent intent = new Intent(Cntx, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Cntx.startActivity(intent);
 
             }
             @Override

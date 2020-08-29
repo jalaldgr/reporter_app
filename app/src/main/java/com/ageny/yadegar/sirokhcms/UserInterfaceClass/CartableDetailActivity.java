@@ -56,6 +56,7 @@ public class CartableDetailActivity extends AppCompatActivity {
     LinearLayout peoplelayout ;
     Button startbttn;
     Button stopbtn;
+    Button showprenewsbttn;
     TextView stopinterviewtxt;
     TextView startinterviewtxt;
     BottomNavigationView bottomNavigationView;
@@ -147,6 +148,7 @@ public class CartableDetailActivity extends AppCompatActivity {
         LinearLayout peoplelayout = findViewById(R.id.CartableDetailpeopleLayout);
         startbttn = (Button)findViewById(R.id.startinterviewbtn);
         stopbtn = (Button)findViewById(R.id.stopinterviewbtn);
+        showprenewsbttn = (Button)findViewById(R.id.CartableDetailshowprenewsbtn) ;
         startinterviewtxt =(TextView) findViewById(R.id.start_interview_txt);
         stopinterviewtxt = (TextView)findViewById(R.id.stop_interview_txt);
 
@@ -163,17 +165,18 @@ public class CartableDetailActivity extends AppCompatActivity {
                     break;
                 case "3":
                     textViewUrgency.setText("انجام شده");
-                    textViewUrgency.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_eye,0);
-                    textViewUrgency.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Cntx, ShowPrenewsActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("userid",UID );
-                            intent.putExtra("cartableid",RID );
-                            Cntx.startActivity(intent);
-                        }
-                    });
+                    showprenewsbttn.setEnabled(true);
+//                    textViewUrgency.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_eye,0);
+//                    textViewUrgency.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Intent intent = new Intent(Cntx, ShowPrenewsActivity.class);
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            intent.putExtra("userid",UID );
+//                            intent.putExtra("cartableid",RID );
+//                            Cntx.startActivity(intent);
+//                        }
+//                    });
                     break;
 
             }
@@ -274,6 +277,17 @@ public class CartableDetailActivity extends AppCompatActivity {
                 }
             }
         });
+        showprenewsbttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent intent = new Intent(Cntx, ShowPrenewsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("userid",UID );
+                    intent.putExtra("cartableid",RID );
+                    Cntx.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
