@@ -5,15 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+
 public class FilePath {
 
+    static final String TAG="hhh";
     /**
      * Method for return file path of Gallery image/ Document / Video / Audio
      *
@@ -29,21 +30,24 @@ public class FilePath {
 
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
+                Log.d("hhh", "getPath: is isExternalStorageDocument");
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/"
+                    Log.d(TAG, "getPath: context"+context.getExternalFilesDir(null).getAbsolutePath());
+                    return context.getExternalFilesDir(null).getAbsolutePath() + "/"
                             + split[1];
                 }
             }
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
+                Log.d(TAG, "getPath: isDownloadsDocument");
                 String id = DocumentsContract.getDocumentId(uri);
+                Log.d(TAG, "getPath : getDocumentId"+id);
                 if (id.startsWith("raw:")) {
                     final String path = id.replaceFirst("raw:", "");
                     return path;
@@ -52,10 +56,14 @@ public class FilePath {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                     contentUri = ContentUris.withAppendedId(
                             Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                    Log.d(TAG, "getPath: "+contentUri.getPath());
+                    return contentUri.getPath();
+
                 }
             }
                 // MediaProvider
             else if (isMediaDocument(uri)) {
+                Log.d(TAG, "getPath: isMediaDocument");
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -78,7 +86,7 @@ public class FilePath {
         }
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
+            Log.d(TAG, "getPath: equalsIgnoreCase");
             // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
@@ -87,6 +95,7 @@ public class FilePath {
         }
         // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            Log.d(TAG, "getPath: equalsIgnoreCase");
             return uri.getPath();
         }
 

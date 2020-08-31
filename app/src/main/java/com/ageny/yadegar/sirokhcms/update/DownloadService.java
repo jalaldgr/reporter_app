@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.protocol.HttpProcessor;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class DownloadService extends IntentService {
 
     private static final int BUFFER_SIZE = 10 * 1024;
-    private static final String TAG = "DownloadService";
+    private static final String TAG = "hhh";
 
 
     public DownloadService() {

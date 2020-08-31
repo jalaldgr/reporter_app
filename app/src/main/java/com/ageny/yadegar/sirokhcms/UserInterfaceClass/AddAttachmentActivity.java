@@ -3,19 +3,13 @@ package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.FileUtils;
-import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -27,41 +21,19 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
+import com.ageny.yadegar.sirokhcms.MultipartUtility;
 import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.util.AbstractSequentialList;
+import java.util.Arrays;
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static java.util.Collections.copy;
 
 
 public class AddAttachmentActivity extends AppCompatActivity {
@@ -132,7 +104,6 @@ public class AddAttachmentActivity extends AppCompatActivity {
 
                     if (JSONHandlre.isConnectedtoInternet(getApplicationContext())) {
                         String selectedFilePath = FilePath.getPath(Cntx, selectedfile);
-                        Log.d(TAG, "onClick selected File: "+selectedFilePath);
                         ReferralFolderAttachmentAdd(selectedFilePath, RID, UID, AttachmentDescriptionTxt.getText().toString());
                     }
                 }
@@ -190,7 +161,7 @@ public class AddAttachmentActivity extends AppCompatActivity {
         final String ParamUID = UID;
         final String ParamFileDes = ReferralFolderFileDescription;
 
-        class ReferralFolderAttachmentAdd extends AsyncTask<Void, Void, String> {
+        class ReferralFolderAttachmentAdd extends AsyncTask<Void, Void, List<String>> {
             private final ProgressDialog dialog = new ProgressDialog(AddAttachmentActivity.this);
             @Override
             protected void onPreExecute() {
@@ -203,16 +174,18 @@ public class AddAttachmentActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(List<String> s) {
                 super.onPostExecute(s);
                 try {
-                    JSONObject obj = new JSONObject(s);
+                    Log.d(TAG, "onPostExecute s :"+s.toString());
+                    JSONObject obj = new JSONObject(s.get(0));
                     if (obj.getInt("State")>0)
                         resultstr = "فایل با موفقیت ضمیمه شد.";
                     else
-                        resultstr = obj.toString(); /* "خطایی رخ داده، فایل ضمیمه نشد."*/
+                        resultstr = obj.toString();
+
                 } catch (Exception e) {
-                    e.printStackTrace();resultstr = "CATCH " + e.toString();
+                    e.printStackTrace();resultstr = "خطا در ارسال اطلاعات...";
                 }
                 if(this.dialog.isShowing()) this.dialog.dismiss();
                 Toast toast= Toast.makeText(Cntx,
@@ -226,42 +199,30 @@ public class AddAttachmentActivity extends AppCompatActivity {
             }
 
             @Override
-            protected String doInBackground(Void... voids) {
-                // String responseString;
-                try {
-                    Log.d(TAG, "doInBackground started");
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL());
-                    final File image = new File(ParamReferralFile);
-                    Charset utf8 = Charset.forName("UTF-8");
-                    //get the actual file from the device
-                    //final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null, Charset.forName("UTF-8"));
-                    MultipartEntityBuilder entity = MultipartEntityBuilder.create()
-                            .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-                            .setCharset(utf8);
+            protected List<String> doInBackground(Void... voids) {
 
-                    entity.addTextBody("RID", ParamRID);
-                    entity.addTextBody("UID", ParamUID);
-                    entity.addPart("ReferralFolderFileDescription",new StringBody(ParamFileDes,utf8));
-                    entity.addPart("ReferralFolderFile", new FileBody(image));
-                    HttpEntity multypartentity = entity.build();
-                    poster.setEntity(multypartentity);
-                    Log.d("hhh" ," upload image path"+ image.getAbsolutePath() );
-                    //Important for android version 9 pie/
-                    client.getConnectionManager().getSchemeRegistry().register(
-                            new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
-                    );
-                    return client.execute(poster, new ResponseHandler<Object>() {
-                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                            HttpEntity respEntity = response.getEntity();
-                            String responseString = EntityUtils.toString(respEntity);
-                            Log.d(TAG, "handleResponse response: "+responseString);
-                            return responseString;
-                        }
-                    }).toString();
+                try {
+                    String requesturl = URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL();
+                    Log.d(TAG, "doInBackground: file address"+ParamReferralFile);
+
+                    final File file = new File(ParamReferralFile);
+                    MultipartUtility multipart = new MultipartUtility(requesturl, "UTF-8");
+                    multipart.addFormField("RID",ParamRID);
+                    multipart.addFormField("UID",ParamUID);
+                    multipart.addFormField("ReferralFolderFileDescription",ParamFileDes);
+                    multipart.addFilePart("ReferralFolderFile",file.getAbsoluteFile());
+
+                    List<String> response = multipart.finish();
+                    Log.d(TAG, "doInBackground: file end");
+                    for (String line : response) {
+                        Log.d(TAG, "Upload Files Response:::" + line);
+                        String responseString = line;
+                    }
+
+                    return response;
                 } catch (Exception e){
-                    Log.d("hhh", "doInBackground Exception e: "+e.toString());
-                    return e.toString();
+                    List<String> list = Arrays.asList(e.toString());
+                    return list;
                 }
             }
         }

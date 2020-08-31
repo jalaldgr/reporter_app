@@ -1,7 +1,4 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
@@ -30,13 +30,15 @@ import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.time.RadialPickerLayout;
 import com.mohamadamin.persianmaterialdatetimepicker.time.TimePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
-import org.apache.http.util.TextUtils;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import saman.zamani.persiandate.PersianDate;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -131,9 +133,12 @@ public class AddMarginActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
             if (JSONHandlre.isConnectedtoInternet(getApplicationContext())) {
-                if ((TitleSpinner.getSelectedItemId() == 0 && TextUtils.isEmpty(descriptionedittext.getText().toString())
-                        || ((TitleSpinner.getSelectedItemId() == 1) && (TextUtils.isEmpty(dateedittext.getText().toString())
-                        || TextUtils.isEmpty(timeedittext.getText().toString())) || TextUtils.isEmpty(descriptionedittext.getText().toString())))) {
+                String description = descriptionedittext.getText().toString();
+                String datestr = dateedittext.getText().toString();
+                String timestr = timeedittext.getText().toString();
+                if ((TitleSpinner.getSelectedItemId() == 0 && description.isEmpty()
+                        || ((TitleSpinner.getSelectedItemId() == 1) && (datestr.isEmpty()
+                        || timestr.isEmpty()) || description.isEmpty()))) {
 
 
                     Toast toast= Toast.makeText(Cntx,

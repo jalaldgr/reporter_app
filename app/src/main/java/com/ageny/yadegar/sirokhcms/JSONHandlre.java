@@ -1,10 +1,8 @@
 package com.ageny.yadegar.sirokhcms;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -17,36 +15,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.MarginDataModelClass;
-import com.ageny.yadegar.sirokhcms.DataModelClass.PreNewsUpdateDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.ReferralFolderAttachmentShowDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.ShowReferralFolderDataModel;
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
-import com.ageny.yadegar.sirokhcms.UserInterfaceClass.CartableDetailActivity;
-import com.ageny.yadegar.sirokhcms.UserInterfaceClass.LoginActivity;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -529,72 +507,72 @@ public class JSONHandlre {
         return ReturnList;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static String ReferralFolderAttachmentAdd(String ReferralFolderFile, String RID,
-                                                     String UID,String ReferralFolderFileDescription){
-        final String ParamReferralFile = ReferralFolderFile;
-        final String ParamRID = RID;
-        final String ParamUID = UID;
-        final String ParamFileDes = ReferralFolderFileDescription;
-
-        class ReferralFolderAttachmentAdd extends AsyncTask<Void, Void, String> {
-            //private final ProgressDialog dialog = new ProgressDialog(myCONTEXT);
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                //this.dialog.setMessage("ارسال اطلاعات...");
-               // this.dialog.show();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-               // this.dialog.dismiss();
-                super.onPostExecute(s);
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                // String responseString;
-                try {
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL());
-                    final File image = new File(ParamReferralFile);  //get the actual file from the device
-                    final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    entity.addPart("RID", new StringBody(ParamRID));
-                    entity.addPart("UID", new StringBody(ParamUID));
-                    entity.addPart("ReferralFolderFile", new FileBody(image));
-                    entity.addPart("ReferralFolderFileDescription", new StringBody(ParamFileDes));
-                    poster.setEntity(entity );
-                    Log.d("hhh upload" , image.getAbsolutePath().toString() );
-                    return client.execute(poster, new ResponseHandler<Object>() {
-                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                            HttpEntity respEntity = response.getEntity();
-                            String responseString = EntityUtils.toString(respEntity);
-                            // do something with the response string
-
-                            return responseString;
-
-                        }
-                    }).toString();
-                } catch (Exception e){
-                    return e.toString();
-                }
-            }
-        }
-        ReferralFolderAttachmentAdd lc = new ReferralFolderAttachmentAdd();
-        String str = null;
-        try {
-            str = lc.execute().get();
-            JSONObject obj = new JSONObject(str);
-            if (obj.getInt("State")>0)
-                str = "فایل با موفقیت ضمیمه شد.";
-            else
-                str = obj.toString(); /* "خطایی رخ داده، فایل ضمیمه نشد."*/
-        } catch (Exception e) {
-            e.printStackTrace();str = "CATCH " + e.toString();
-        }
-        return str;
-    }
+//
+//    public static String ReferralFolderAttachmentAdd(String ReferralFolderFile, String RID,
+//                                                     String UID,String ReferralFolderFileDescription){
+//        final String ParamReferralFile = ReferralFolderFile;
+//        final String ParamRID = RID;
+//        final String ParamUID = UID;
+//        final String ParamFileDes = ReferralFolderFileDescription;
+//
+//        class ReferralFolderAttachmentAdd extends AsyncTask<Void, Void, String> {
+//            //private final ProgressDialog dialog = new ProgressDialog(myCONTEXT);
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//                //this.dialog.setMessage("ارسال اطلاعات...");
+//               // this.dialog.show();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//               // this.dialog.dismiss();
+//                super.onPostExecute(s);
+//            }
+//
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                // String responseString;
+//                try {
+//                    HttpClient client = new DefaultHttpClient();
+//                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL());
+//                    final File image = new File(ParamReferralFile);  //get the actual file from the device
+//                    final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+//                    entity.addPart("RID", new StringBody(ParamRID));
+//                    entity.addPart("UID", new StringBody(ParamUID));
+//                    entity.addPart("ReferralFolderFile", new FileBody(image));
+//                    entity.addPart("ReferralFolderFileDescription", new StringBody(ParamFileDes));
+//                    poster.setEntity(entity );
+//                    Log.d("hhh upload" , image.getAbsolutePath().toString() );
+//                    return client.execute(poster, new ResponseHandler<Object>() {
+//                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+//                            HttpEntity respEntity = response.getEntity();
+//                            String responseString = EntityUtils.toString(respEntity);
+//                            // do something with the response string
+//
+//                            return responseString;
+//
+//                        }
+//                    }).toString();
+//                } catch (Exception e){
+//                    return e.toString();
+//                }
+//            }
+//        }
+//        ReferralFolderAttachmentAdd lc = new ReferralFolderAttachmentAdd();
+//        String str = null;
+//        try {
+//            str = lc.execute().get();
+//            JSONObject obj = new JSONObject(str);
+//            if (obj.getInt("State")>0)
+//                str = "فایل با موفقیت ضمیمه شد.";
+//            else
+//                str = obj.toString(); /* "خطایی رخ داده، فایل ضمیمه نشد."*/
+//        } catch (Exception e) {
+//            e.printStackTrace();str = "CATCH " + e.toString();
+//        }
+//        return str;
+//    }
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void ReferralFolderStartInterview(Context c, String RefferalID){
@@ -705,83 +683,83 @@ public class JSONHandlre {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String PreNewsUpdate(Context c, PreNewsUpdateDataModelClass PreNews){
-        myCONTEXT = c;
-        final PreNewsUpdateDataModelClass ParamPreNews = PreNews;
-
-        class PreNewsUpdate extends AsyncTask<Void, Void, String> {
-            //private final ProgressDialog dialog = new ProgressDialog(myCONTEXT);
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-             //   this.dialog.setMessage("ارسال اطلاعات...");
-              //  this.dialog.show();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-               // this.dialog.dismiss();
-                super.onPostExecute(s);
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                try {
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getPreNewsUpdateURL());
-                    File image = new File(ParamPreNews.getNews_MainPic_File());  //get the actual file from the device
-                    Charset utf8 = Charset.forName("UTF-8");
-                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, utf8);
-                    /*HttpEntity en = new HttpEntity() {
-                    }*/
-                    entity.addPart("UID", new StringBody(ParamPreNews.getUser_Id()));
-                    entity.addPart("RID", new StringBody(ParamPreNews.getReferral_Id()));
-                    entity.addPart("NewsTitle", new StringBody(ParamPreNews.getNews_Title(), Charset.forName("UTF-8")));
-                    entity.addPart("fileupload", new FileBody(image));
-                    entity.addPart("TopTitle", new StringBody(ParamPreNews.getTop_Title(), Charset.forName("UTF-8")));
-                    entity.addPart("BottomTitle", new StringBody(ParamPreNews.getSub_Title(), Charset.forName("UTF-8")));
-                    entity.addPart("ContentSummary", new StringBody(ParamPreNews.getNews_Summary(), Charset.forName("UTF-8")));
-                    entity.addPart("news_category_id", new StringBody(ParamPreNews.getNews_Category_Id()));
-                    entity.addPart("news_type_id", new StringBody(ParamPreNews.getNews_Type_Id()));
-                    entity.addPart("province_id", new StringBody(ParamPreNews.getProvince_Id()));
-                    entity.addPart("city_id", new StringBody(ParamPreNews.getCity_Id()));
-                    entity.addPart("MainContent", new StringBody(ParamPreNews.getMainContent(), Charset.forName("UTF-8")));
-                    poster.setEntity(entity);
-                    //poster.setEntity()
-
-                    Log.d("hhh upload preNews" , image.getAbsolutePath().toString() );
-                    return client.execute(poster, new ResponseHandler<Object>() {
-                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                            HttpEntity respEntity = response.getEntity();
-                            String responseString = EntityUtils.toString(respEntity);
-                            // do something with the response string
-
-                            return responseString;
-                        }
-                    }).toString();
-                } catch (Exception e){
-                    Log.d("hhh", "PreNewsUpdate bakgrond: "+e.toString());
-                    return e.toString();
-                }
-            }
-        }
-        PreNewsUpdate TM = new PreNewsUpdate();
-        String str = null;
-
-        try {
-            str = TM.execute().get();
-            JSONObject obj = new JSONObject(str);
-            if (obj.getInt("State")>0)
-                str = "خبر با موفقیت ارسال شد.";
-            else
-                str = obj.toString(); /* "خطایی رخ داده، فایل ضمیمه نشد."*/
-        } catch (Exception e) {
-            Log.d("hhh", "PreNewsUpdate EEEnd cacht: "+e.toString());
-            e.printStackTrace();str = "CATCH " + e.toString();
-        }
-        Log.d("hhh", "PreNewsUpdate return str : "+ str);
-        return str;
-    }
+//    public static String PreNewsUpdate(Context c, PreNewsUpdateDataModelClass PreNews){
+//        myCONTEXT = c;
+//        final PreNewsUpdateDataModelClass ParamPreNews = PreNews;
+//
+//        class PreNewsUpdate extends AsyncTask<Void, Void, String> {
+//            //private final ProgressDialog dialog = new ProgressDialog(myCONTEXT);
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//             //   this.dialog.setMessage("ارسال اطلاعات...");
+//              //  this.dialog.show();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//               // this.dialog.dismiss();
+//                super.onPostExecute(s);
+//            }
+//
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                try {
+//                    HttpClient client = new DefaultHttpClient();
+//                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getPreNewsUpdateURL());
+//                    File image = new File(ParamPreNews.getNews_MainPic_File());  //get the actual file from the device
+//                    Charset utf8 = Charset.forName("UTF-8");
+//                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, utf8);
+//                    /*HttpEntity en = new HttpEntity() {
+//                    }*/
+//                    entity.addPart("UID", new StringBody(ParamPreNews.getUser_Id()));
+//                    entity.addPart("RID", new StringBody(ParamPreNews.getReferral_Id()));
+//                    entity.addPart("NewsTitle", new StringBody(ParamPreNews.getNews_Title(), Charset.forName("UTF-8")));
+//                    entity.addPart("fileupload", new FileBody(image));
+//                    entity.addPart("TopTitle", new StringBody(ParamPreNews.getTop_Title(), Charset.forName("UTF-8")));
+//                    entity.addPart("BottomTitle", new StringBody(ParamPreNews.getSub_Title(), Charset.forName("UTF-8")));
+//                    entity.addPart("ContentSummary", new StringBody(ParamPreNews.getNews_Summary(), Charset.forName("UTF-8")));
+//                    entity.addPart("news_category_id", new StringBody(ParamPreNews.getNews_Category_Id()));
+//                    entity.addPart("news_type_id", new StringBody(ParamPreNews.getNews_Type_Id()));
+//                    entity.addPart("province_id", new StringBody(ParamPreNews.getProvince_Id()));
+//                    entity.addPart("city_id", new StringBody(ParamPreNews.getCity_Id()));
+//                    entity.addPart("MainContent", new StringBody(ParamPreNews.getMainContent(), Charset.forName("UTF-8")));
+//                    poster.setEntity(entity);
+//                    //poster.setEntity()
+//
+//                    Log.d("hhh upload preNews" , image.getAbsolutePath().toString() );
+//                    return client.execute(poster, new ResponseHandler<Object>() {
+//                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+//                            HttpEntity respEntity = response.getEntity();
+//                            String responseString = EntityUtils.toString(respEntity);
+//                            // do something with the response string
+//
+//                            return responseString;
+//                        }
+//                    }).toString();
+//                } catch (Exception e){
+//                    Log.d("hhh", "PreNewsUpdate bakgrond: "+e.toString());
+//                    return e.toString();
+//                }
+//            }
+//        }
+//        PreNewsUpdate TM = new PreNewsUpdate();
+//        String str = null;
+//
+//        try {
+//            str = TM.execute().get();
+//            JSONObject obj = new JSONObject(str);
+//            if (obj.getInt("State")>0)
+//                str = "خبر با موفقیت ارسال شد.";
+//            else
+//                str = obj.toString(); /* "خطایی رخ داده، فایل ضمیمه نشد."*/
+//        } catch (Exception e) {
+//            Log.d("hhh", "PreNewsUpdate EEEnd cacht: "+e.toString());
+//            e.printStackTrace();str = "CATCH " + e.toString();
+//        }
+//        Log.d("hhh", "PreNewsUpdate return str : "+ str);
+//        return str;
+//    }
     ////////////////////////////////////////////////////////////////////////////////////////////
 // متد این درخواست GET هست که باید تغییر کنه
     public static void GetNewsCategories(Context c){

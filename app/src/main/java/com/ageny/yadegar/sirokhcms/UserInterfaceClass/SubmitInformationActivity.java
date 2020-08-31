@@ -1,10 +1,6 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,12 +10,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,39 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ageny.yadegar.sirokhcms.DataModelClass.CitiesDataModelClass;
-import com.ageny.yadegar.sirokhcms.DataModelClass.NewsCategoriesDataModel;
 import com.ageny.yadegar.sirokhcms.DataModelClass.PreNewsUpdateDataModelClass;
-import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
+import com.ageny.yadegar.sirokhcms.MultipartUtility;
 import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
-import com.ageny.yadegar.sirokhcms.UserInterfaceClass.Cartable.CartableFragment;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -608,7 +584,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
     public void PreNewsUpdate( PreNewsUpdateDataModelClass PreNews){
         final PreNewsUpdateDataModelClass ParamPreNews = PreNews;
 
-        class PreNewsUpdate extends AsyncTask<Void, Void, String> {
+        class PreNewsUpdate extends AsyncTask<Void, Void, List<String>> {
             private final ProgressDialog dialog = new ProgressDialog(SubmitInformationActivity.this);
             @Override
             protected void onPreExecute() {
@@ -620,11 +596,11 @@ public class SubmitInformationActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(List<String> s) {
                 super.onPostExecute(s);
                 try {
                     Log.d("hhh", "onPostExecute:resposne "+s);
-                    JSONObject obj = new JSONObject(s);
+                    JSONObject obj = new JSONObject(s.get(0));
                     if (obj.getInt("State")>0) {
                         JsonResult = "خبر با موفقیت ارسال شد.";
                         Log.d("hhh", "onPostExecute: " + s);
@@ -648,47 +624,41 @@ public class SubmitInformationActivity extends AppCompatActivity {
             }
 
             @Override
-            protected String doInBackground(Void... voids) {
-                try {
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost poster = new HttpPost(URLs.getBaseURL()+URLs.getPreNewsUpdateURL());
-                    Charset utf8 = Charset.forName("UTF-8");
-                    MultipartEntityBuilder entity = MultipartEntityBuilder.create()
-                            .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-                            .setCharset(utf8);
-                    entity.addTextBody("UID",ParamPreNews.getUser_Id());
-                    entity.addTextBody("RID",ParamPreNews.getReferral_Id());
-                    entity.addTextBody("NewsCategoryID", ParamPreNews.getNews_Category_Id());
-                    entity.addTextBody("NewsTypeID", ParamPreNews.getNews_Type_Id());
-                    entity.addTextBody("ProvinceID", ParamPreNews.getProvince_Id());
-                    entity.addTextBody("CityID",ParamPreNews.getCity_Id());
-                    entity.addTextBody("NewsReporterID",ParamPreNews.getReporter_Id());
-                    if(preNewsUpdateDataModelClass.getNews_MainPic_File()!=null){
-                        final File image = new File(ParamPreNews.getNews_MainPic_File());
-                        entity.addPart("fileupload", new FileBody(image));}
-                    entity.addPart("MainContent",new StringBody( ParamPreNews.getMainContent(),utf8));
-                    entity.addPart("NewsTitle",new StringBody(ParamPreNews.getNews_Title(),utf8));
-                    entity.addPart("TopTitle",new StringBody(ParamPreNews.getTop_Title(),utf8));
-                    entity.addPart("BottomTitle",new StringBody(ParamPreNews.getSub_Title(),utf8));
-                    entity.addPart("ContentSummary",new StringBody(ParamPreNews.getNews_Summary(),utf8));
-                    HttpEntity httpmultypartEntity = entity.build();
-                    poster.setEntity(httpmultypartEntity);
+            protected List<String> doInBackground(Void... voids) {
 
-                    //Important for android version 9 pie/
-                    client.getConnectionManager().getSchemeRegistry().register(
-                            new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
-                    );
-                    return client.execute(poster, new ResponseHandler<Object>() {
-                        public Object handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                            HttpEntity respEntity = response.getEntity();
-                            String responseString = EntityUtils.toString(respEntity);
-                            Log.d("hhh", "handleResponse: "+responseString);
-                            return responseString;
-                        }
-                    }).toString();
+                try {
+                    String requesturl = URLs.getBaseURL()+URLs.getPreNewsUpdateURL();
+                    MultipartUtility multipart = new MultipartUtility(requesturl, "UTF-8");
+                    multipart.addFormField("RID",ParamPreNews.getReferral_Id());
+                    multipart.addFormField("UID",ParamPreNews.getUser_Id());
+                    multipart.addFormField("NewsCategoryID",ParamPreNews.getNews_Category_Id());
+                    multipart.addFormField("NewsTypeID",ParamPreNews.getNews_Category_Id());
+                    multipart.addFormField("ProvinceID", ParamPreNews.getProvince_Id());
+                    multipart.addFormField("CityID",ParamPreNews.getCity_Id());
+                    multipart.addFormField("NewsReporterID",ParamPreNews.getReporter_Id());
+                    multipart.addFormField("MainContent", ParamPreNews.getMainContent());
+                    multipart.addFormField("NewsTitle",ParamPreNews.getNews_Title());
+                    multipart.addFormField("BottomTitle",ParamPreNews.getSub_Title());
+                    multipart.addFormField("ContentSummary",ParamPreNews.getNews_Summary());
+                    if(preNewsUpdateDataModelClass.getNews_MainPic_File()!=null)
+                    {
+                        final File image = new File(ParamPreNews.getNews_MainPic_File());
+                        multipart.addFilePart("fileupload",image);
+                    }
+
+                    List<String> response = multipart.finish();
+                    Log.d(TAG, "doInBackground: file end");
+                    for (String line : response) {
+                        Log.d(TAG, "Upload Files Response:::" + line);
+                        String responseString = line;
+                    }
+
+                    return response;
                 } catch (Exception e){
-                    return e.toString();
+                    List<String> list = Arrays.asList(e.toString());
+                    return list;
                 }
+
             }
         }
         PreNewsUpdate TM = new PreNewsUpdate();
