@@ -25,8 +25,12 @@
     <string name="urgency_id_cartable_detail">فوریت مدرک</string>
     <string name="action_date_cartable_detail">زمان اقدام</string>
     <string name="new_type_id_cartable_detail">نوع مدرک</string>
-    <string name="description_cartable_detail">
-    </string>
+    <string name="description_cartable_detail">خلاصه</string>
+    <string name="start_record_cartable_detail">ضبط</string>
+    <string name="pause_record_cartable_detail">مکث</string>
+    <string name="stop_voice_cartable_detail">توقف</string>
+
+    <string name="kk">کاکا</string>
     <string name="return_refferal_cartable_detail">برگشت مدرک</string>
     <string name="stop_interview_cartable_detail">پایان مصاحبه</string>
     <string name="start_interview_cartable_detail">شروع مصاحبه</string>

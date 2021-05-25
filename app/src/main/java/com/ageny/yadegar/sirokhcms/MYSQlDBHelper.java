@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 import android.util.Log;
-
-//import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.CitiesDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.MarginDataModelClass;
@@ -21,18 +18,14 @@ import com.ageny.yadegar.sirokhcms.DataModelClass.PreNewsUpdateDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.ProvincesDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
-import com.mohamadamin.persianmaterialdatetimepicker.Utils;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
+
+//import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
 
 public class MYSQlDBHelper extends SQLiteOpenHelper {
     private static String DB_PATH = "";
@@ -821,29 +814,29 @@ public class MYSQlDBHelper extends SQLiteOpenHelper {
         return str;
     }
 
-    public List<String> GetCitiesIDList(String Province_ID){
-        List<String> TempList=new ArrayList<String>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor c;
-        try {
-            c = db.rawQuery("SELECT * FROM Cities WHERE Province_ID = " + Province_ID, null);
-            if (c == null)
-                return null;
-            c.moveToFirst();
-            do{
-                Log.i("Get Cities Says:", c.toString());
-                CitiesDataModelClass pr =  new CitiesDataModelClass(
-                        (c.getString(0)),
-                        (c.getString(1)),
-                        (c.getString(2)));
-                TempList.add(c.getString(0));
-            }while (c.moveToNext());
-            c.close();
-        }catch (Exception e){Log.i("Get Cities Says:", e.toString());}
-        db.close();
-        return TempList;
-    }
+//    public List<String[]> GetCitiesIDList(String Province_ID){
+//        List<String> TempList=new ArrayList<String>();
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        Cursor c;
+//        try {
+//            c = db.rawQuery("SELECT * FROM Cities WHERE Province_ID = " + Province_ID, null);
+//            if (c == null)
+//                return null;
+//            c.moveToFirst();
+//            do{
+//                Log.i("Get Cities Says:", c.toString());
+//                CitiesDataModelClass pr =  new CitiesDataModelClass(
+//                        (c.getString(0)),
+//                        (c.getString(1)),
+//                        (c.getString(2)));
+//                TempList.add(c.getString(0));
+//            }while (c.moveToNext());
+//            c.close();
+//        }catch (Exception e){Log.i("Get Cities Says:", e.toString());}
+//        db.close();
+//        return TempList[0];
+//    }
 
 
 

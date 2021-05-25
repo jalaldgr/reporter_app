@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-        private void userLogin() {
+    private void userLogin() {
 
             final String username = UsernameTxt.getText().toString();
             final String password = PasswordTxt.getText().toString();

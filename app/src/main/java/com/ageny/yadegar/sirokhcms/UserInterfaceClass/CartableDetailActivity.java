@@ -1,13 +1,13 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -20,10 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.ageny.yadegar.sirokhcms.AudioRecorder;
 import com.ageny.yadegar.sirokhcms.DataModelClass.ShowReferralFolderDataModel;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
+import com.ageny.yadegar.sirokhcms.MultipartUtility;
 import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,19 +38,26 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CartableDetailActivity extends AppCompatActivity {
+    static String TAG = "hhh";
     String UID,RID,RSID,RNTT,startinterviewstr,stopinterviewstr=null;;
     String startinterviewresult,stopinterviewresult="";
     static MYSQlDBHelper myDBHelper;
     public Context Cntx;
     public ShowReferralFolderDataModel Ur = null;
-
+    public boolean isrecording=false;
+    public boolean pauserecording=false;
     TextView textViewSubject;
     TextView textViewDescription;
     TextView textViewOrgan;
@@ -57,9 +71,14 @@ public class CartableDetailActivity extends AppCompatActivity {
     Button startbttn;
     Button stopbtn;
     Button showprenewsbttn;
+    Button voicerecorderbttn;
+    Button voicestopbttn;
     TextView stopinterviewtxt;
     TextView startinterviewtxt;
     BottomNavigationView bottomNavigationView;
+    String resultstr;
+    String recorderfileName;
+    PersianDate pdatestart,pdatestop;
 
     // ArrayIndexOutOfBoundsException
 
@@ -148,6 +167,8 @@ public class CartableDetailActivity extends AppCompatActivity {
         LinearLayout peoplelayout = findViewById(R.id.CartableDetailpeopleLayout);
         startbttn = (Button)findViewById(R.id.startinterviewbtn);
         stopbtn = (Button)findViewById(R.id.stopinterviewbtn);
+        voicerecorderbttn=(Button)findViewById(R.id.CartableDetailVoiceRecordbttn) ;
+        voicestopbttn = (Button)findViewById(R.id.CartableDetailVoiceStopbttn) ;
         showprenewsbttn = (Button)findViewById(R.id.CartableDetailshowprenewsbtn) ;
         startinterviewtxt =(TextView) findViewById(R.id.start_interview_txt);
         stopinterviewtxt = (TextView)findViewById(R.id.stop_interview_txt);
@@ -221,6 +242,10 @@ public class CartableDetailActivity extends AppCompatActivity {
                 al.show();
             }
         });
+        if (isrecording)
+            voicerecorderbttn.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_stop_mic,0,0,0);
+        else
+            voicerecorderbttn.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_start_mic,0,0,0);
 
         peoplelayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +282,9 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         });
 
+        ////////////Start Recording Voice////////////
+
+
         startbttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -287,7 +315,69 @@ public class CartableDetailActivity extends AppCompatActivity {
                     Cntx.startActivity(intent);
             }
         });
+        recorderfileName = Cntx.getExternalFilesDir(null)+"/SirokhVoice_"+ new Date().getTime() + ".mp3";
+        final AudioRecorder audioRecorder = new AudioRecorder(recorderfileName,Cntx);
+        Log.d(TAG, "onCreate: after recorder"+Cntx.getExternalFilesDir(null));
+        voicerecorderbttn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+                if (checkSelfPermission( Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},10 );
 
+                } else {
+
+                    if (!isrecording)  {
+                        isrecording=true;
+                        voicerecorderbttn.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_reum_mic,0,0,0);
+                        try {
+                            audioRecorder.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        if (!pauserecording) {
+                            voicerecorderbttn.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_start_mic, 0, 0, 0);
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    audioRecorder.pause();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pauserecording = true;
+                        }else{
+                            voicerecorderbttn.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_reum_mic,0,0,0);
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    audioRecorder.resum();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pauserecording = false;
+
+                        }
+
+                    }
+                }
+
+            }
+        });
+        voicestopbttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    audioRecorder.stop();
+                    VoiceAttachmentAdd(recorderfileName,RID,UID,"صدای ضمیمه برای "+Ur.getSubject()+" ("+pdatestart.toString()+")");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                voicerecorderbttn.setEnabled(false);
+                voicestopbttn.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -378,7 +468,7 @@ public class CartableDetailActivity extends AppCompatActivity {
                     ex.printStackTrace();  Log.d("hhh", "ERROR ShowReferralFolder: "+ex.toString());
                 }
                 textViewSubject.setText(Ur.getSubject());
-                textViewDescription.setText( (Ur.getDescription().toString().equals(null)) ? Ur.getDescription() :"بدون توضیحات" );
+                textViewDescription.setText( !(Ur.getDescription().toString().equals(null)) ? Ur.getDescription() :"بدون توضیحات" );
                 textViewOrgan.setText(Ur.getOrgan_Title());
                 textViewPeople.setText(Ur.getPeople_first_name() + " " + Ur.getPeople_last_name());
                 textViewActiondate.setText(Ur.getActionDate());
@@ -455,10 +545,8 @@ public class CartableDetailActivity extends AppCompatActivity {
                 HTTPRequestHandlre requestHandler = new HTTPRequestHandlre();
                 //creating request parameters
                 HashMap<String, String> params = new HashMap<>();
-
                 params.put("Content-Type", "application/json");
                 params.put("RID", ParamRID);
-
                 String st =  requestHandler.sendPostRequest(URLs.getBaseURL()+URLs.getReferralFolderStartInterviewURL(), params);
                 return st;
             }
@@ -518,6 +606,8 @@ public class CartableDetailActivity extends AppCompatActivity {
         ReferralFolderEndInterview TM = new ReferralFolderEndInterview();
         TM.execute();
     }
+
+
     public void GetPreNews(  String RefferalID) {
         final String ParamRID = RefferalID;
 
@@ -542,24 +632,24 @@ public class CartableDetailActivity extends AppCompatActivity {
                     if (obj.get("Data").toString() != null) {
                         JSONObject kk = new JSONObject(obj.get("Data").toString());
 
-                        PersianDateFormat persianDateFormat=new PersianDateFormat("yyyy-MM-dd HH:mm:ss");
-                        PersianDate pdatestart,pdatestop;
+                        if (!kk.get("StartInterview").toString().equals("null")) {
+                            PersianDateFormat persianDateFormat=new PersianDateFormat("yyyy-MM-dd HH:mm:ss");
+                            pdatestart = persianDateFormat.parseGrg(kk.get("StartInterview").toString(), "yyyy-MM-dd HH:mm:ss");
+                            startinterviewtxt.setText(pdatestart.toString());
+                            startbttn.setEnabled(false);
 
-                        pdatestart=persianDateFormat.parseGrg(kk.get("StartInterview").toString(),"yyyy-MM-dd HH:mm:ss");
-                        startinterviewtxt.setText(pdatestart.toString());
 
-                        pdatestop=persianDateFormat.parseGrg(kk.get("EndInterview").toString(),"yyyy-MM-dd HH:mm:ss");
-                        stopinterviewtxt.setText(pdatestop.toString());
+                        }
 
-                        if(kk.get("StartInterview").toString().equals("null"))
-                            startbttn.setVisibility(View.VISIBLE);
-                        else
-                            startbttn.setVisibility(View.GONE);
+                        if (!kk.get("EndInterview").toString().equals("null")) {
+                            PersianDateFormat persianDateFormat=new PersianDateFormat("yyyy-MM-dd HH:mm:ss");
+                            pdatestop = persianDateFormat.parseGrg(kk.get("EndInterview").toString(), "yyyy-MM-dd HH:mm:ss");
+                            stopinterviewtxt.setText(pdatestop.toString());
+                            stopbtn.setEnabled(false);
 
-                        if(kk.get("EndInterview").toString().equals("null"))
-                            stopbtn.setVisibility(View.VISIBLE);
-                        else
-                            stopbtn.setVisibility(View.GONE);
+                        }
+
+
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();  Log.d("hhh", "ERROR GetPreNews: "+ex.toString());
@@ -593,5 +683,76 @@ public class CartableDetailActivity extends AppCompatActivity {
     }
 
 
+    public  void VoiceAttachmentAdd(String ReferralFolderFile, String RID,
+                                             String UID,String ReferralFolderFileDescription){
+        final String ParamReferralFile = ReferralFolderFile;
+        final String ParamRID = RID;
+        final String ParamUID = UID;
+        final String ParamFileDes = ReferralFolderFileDescription;
+        class ReferralFolderAttachmentAdd extends AsyncTask<Void, Void, List<String>> {
+            private final ProgressDialog dialog = new ProgressDialog(CartableDetailActivity.this);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage("ارسال صدا...");
+                this.dialog.setCanceledOnTouchOutside(false);
+                this.dialog.show();
+            }
+            @Override
+            protected void onPostExecute(List<String> s) {
+                super.onPostExecute(s);
+                try {
+                    Log.d(TAG, "onPostExecute s :"+s.toString());
+                    JSONObject obj = new JSONObject(s.get(0));
+                    if (obj.getInt("State")>0)
+                        resultstr = "صدا با موفقیت ضمیمه شد.";
+                    else
+                        resultstr = obj.toString();
+
+                } catch (Exception e) {
+                    e.printStackTrace();resultstr = "خطا در ارسال...، لطفا فایل صوتی را بعدا ضمیمه کنید";
+                }
+                if(this.dialog.isShowing()) this.dialog.dismiss();
+                Toast toast= Toast.makeText(Cntx,
+                        resultstr, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                ViewGroup group = (ViewGroup) toast.getView();
+                TextView messageTextView = (TextView) group.getChildAt(0);
+                messageTextView.setTextSize(18);
+                toast.show();
+                voicerecorderbttn.setEnabled(false);
+            }
+
+            @Override
+            protected List<String> doInBackground(Void... voids) {
+
+                try {
+                    String requesturl = URLs.getBaseURL()+URLs.getReferralFolderAttachmentAddURL();
+                    Log.d(TAG, "doInBackground: file address"+ParamReferralFile);
+
+                    final File file = new File(ParamReferralFile);
+                    MultipartUtility multipart = new MultipartUtility(requesturl, "UTF-8");
+                    multipart.addFormField("RID",ParamRID);
+                    multipart.addFormField("UID",ParamUID);
+                    multipart.addFormField("ReferralFolderFileDescription",ParamFileDes);
+                    multipart.addFilePart("ReferralFolderFile",file.getAbsoluteFile());
+
+                    List<String> response = multipart.finish();
+                    Log.d(TAG, "doInBackground: file end");
+                    for (String line : response) {
+                        String responseString = line;
+                    }
+
+                    return response;
+                } catch (Exception e){
+                    List<String> list = Arrays.asList(e.toString());
+                    return list;
+                }
+            }
+        }
+        ReferralFolderAttachmentAdd lc = new ReferralFolderAttachmentAdd();
+        lc.execute();
+
+    }
 
 }

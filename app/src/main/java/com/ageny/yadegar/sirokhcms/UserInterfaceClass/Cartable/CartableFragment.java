@@ -42,7 +42,6 @@ public class CartableFragment extends Fragment {
     LinearLayout MainLay;
     public ArrayList<UserReferralDataModel> URList;
     RecyclerView myRecycler;
-    ArrayList<UserReferralDataModel> mItem= new ArrayList<UserReferralDataModel>();
     ItemAdapter mAdapter;
     UserDataModelClass crrntUser;
 
