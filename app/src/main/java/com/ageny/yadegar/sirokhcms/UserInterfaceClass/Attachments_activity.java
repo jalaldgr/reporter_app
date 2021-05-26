@@ -1,11 +1,5 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +12,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.ReferralFolderAttachmentShowDataModelClass;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
@@ -26,14 +25,11 @@ import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Attachments_activity extends AppCompatActivity {
     String RID,UID;
@@ -78,11 +74,11 @@ public class Attachments_activity extends AppCompatActivity {
 
     }
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

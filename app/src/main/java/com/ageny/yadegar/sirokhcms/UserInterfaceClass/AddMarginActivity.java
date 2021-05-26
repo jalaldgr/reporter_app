@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import saman.zamani.persiandate.PersianDate;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddMarginActivity extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
@@ -174,11 +173,11 @@ public class AddMarginActivity extends AppCompatActivity implements
         TitleSpinner = (Spinner) findViewById(R.id.margin_title_spinner);
     }
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
 ////////////////////////////////////////////////////////
 public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

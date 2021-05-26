@@ -54,7 +54,7 @@
 
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
-        <item name="fontFamily">@font/yekan</item>
+<!--        <item name="fontFamily">@font/yekan</item>-->
     </style>
 
 

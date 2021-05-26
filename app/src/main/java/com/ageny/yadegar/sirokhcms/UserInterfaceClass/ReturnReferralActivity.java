@@ -1,14 +1,10 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 
-import androidx.annotation.ColorInt;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.R;
@@ -31,8 +29,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ReturnReferralActivity extends AppCompatActivity {
     private Spinner ReasonsSpinner ;
@@ -69,12 +65,12 @@ public class ReturnReferralActivity extends AppCompatActivity {
             }
         });
     }
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//
+//    }
     ///////////////// spinner ///////////////////////
     public void addItemsOnReturnReferralReasonsSpinner() {
         ReasonsSpinner = (Spinner) findViewById(R.id.ReturnReferralReasonsSpnr);

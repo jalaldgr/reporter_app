@@ -41,8 +41,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class SubmitInformationActivity extends AppCompatActivity {
     String TAG = "hhh";
@@ -510,11 +508,11 @@ public class SubmitInformationActivity extends AppCompatActivity {
         });
     }
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

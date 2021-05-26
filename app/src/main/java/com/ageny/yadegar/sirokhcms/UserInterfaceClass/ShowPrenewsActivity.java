@@ -1,7 +1,5 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +9,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.GetPreNewsDataModelClass;
 import com.ageny.yadegar.sirokhcms.DataModelClass.NewsCategoriesDataModel;
@@ -24,17 +23,11 @@ import com.ageny.yadegar.sirokhcms.URLs;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import saman.zamani.persiandate.PersianDate;
-import saman.zamani.persiandate.PersianDateFormat;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class ShowPrenewsActivity extends AppCompatActivity {
@@ -88,11 +81,11 @@ public class ShowPrenewsActivity extends AppCompatActivity {
 
 
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

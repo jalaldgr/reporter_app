@@ -1,13 +1,8 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,9 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
@@ -30,8 +26,6 @@ import com.ageny.yadegar.sirokhcms.URLs;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
     EditText UsernameTxt,PasswordTxt;
@@ -87,11 +81,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     private void userLogin() {
 
             final String username = UsernameTxt.getText().toString();

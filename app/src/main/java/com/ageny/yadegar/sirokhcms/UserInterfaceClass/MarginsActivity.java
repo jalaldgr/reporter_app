@@ -1,11 +1,5 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,26 +11,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ageny.yadegar.sirokhcms.DataModelClass.MarginDataModelClass;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
-import com.ageny.yadegar.sirokhcms.ItemAdapter;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
 import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MarginsActivity extends AppCompatActivity {
     String RID,UID;
@@ -107,20 +101,17 @@ public class MarginsActivity extends AppCompatActivity {
         }
     }
 
-    ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    ///////////////change fonts to yekan/////////////////////
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //Write your logic here
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {//Write your logic here
+            this.finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

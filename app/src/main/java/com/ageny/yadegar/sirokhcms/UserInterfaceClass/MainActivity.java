@@ -3,27 +3,29 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
 import com.ageny.yadegar.sirokhcms.DownloadImageTask;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
 import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
 import com.ageny.yadegar.sirokhcms.R;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import com.ageny.yadegar.sirokhcms.URLs;
 import com.ageny.yadegar.sirokhcms.UserInterfaceClass.Exit.ExitFragment;
 import com.google.android.material.navigation.NavigationView;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +33,6 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.HashMap;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -105,10 +105,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.Q){
+//            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        }
+//        else {
+//            super.attachBaseContext(newBase);
+//        }
+//    }
     @Override
     public void onBackPressed() {
         Fragment webview = getSupportFragmentManager().findFragmentByTag("webview");

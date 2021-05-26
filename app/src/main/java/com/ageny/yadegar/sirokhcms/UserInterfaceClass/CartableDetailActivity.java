@@ -47,7 +47,6 @@ import java.util.List;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CartableDetailActivity extends AppCompatActivity {
     static String TAG = "hhh";
@@ -380,10 +379,10 @@ public class CartableDetailActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

@@ -33,8 +33,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class AddAttachmentActivity extends AppCompatActivity {
     static final String TAG="hhh";
@@ -137,10 +135,10 @@ public class AddAttachmentActivity extends AppCompatActivity {
     }
 
     ///////////////change fonts to yekan/////////////////////
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
