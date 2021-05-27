@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.ageny.yadegar.sirokhcms.DataModelClass.UserDataModelClass;
+import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
 import com.ageny.yadegar.sirokhcms.ItemAdapter;
+import com.ageny.yadegar.sirokhcms.JSONHandlre;
 import com.ageny.yadegar.sirokhcms.MYSQlDBHelper;
 import com.ageny.yadegar.sirokhcms.R;
-import com.ageny.yadegar.sirokhcms.JSONHandlre;
-import com.ageny.yadegar.sirokhcms.DataModelClass.UserReferralDataModel;
 import com.ageny.yadegar.sirokhcms.URLs;
 
 import org.json.JSONArray;
@@ -31,7 +31,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
@@ -55,7 +54,7 @@ public class CartableFragment extends Fragment {
             myDBHelper.getWritableDatabase();
             crrntUser = myDBHelper.GetCurrentUser();
             LoadCartable lc = new LoadCartable();
-            lc.execute();
+            lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
         }catch (Exception e){
             Log.i("hhh load cartable Says:", e.toString());

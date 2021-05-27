@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         GetNewsReporters lc = new GetNewsReporters();
-        lc.execute();
+        lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
     }
 
 

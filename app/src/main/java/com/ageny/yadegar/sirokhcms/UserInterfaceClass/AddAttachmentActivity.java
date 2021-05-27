@@ -225,7 +225,7 @@ public class AddAttachmentActivity extends AppCompatActivity {
             }
         }
         ReferralFolderAttachmentAdd lc = new ReferralFolderAttachmentAdd();
-        lc.execute();
+        lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 }

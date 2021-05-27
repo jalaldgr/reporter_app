@@ -15,20 +15,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.ageny.yadegar.sirokhcms.HTTPRequestHandlre;
-import com.ageny.yadegar.sirokhcms.UserInterfaceClass.MarginsActivity;
-import com.ageny.yadegar.sirokhcms.update.AppUtils;
-import com.ageny.yadegar.sirokhcms.update.UpdateDialog;
 import com.ageny.yadegar.sirokhcms.R;
 import com.ageny.yadegar.sirokhcms.URLs;
+import com.ageny.yadegar.sirokhcms.update.AppUtils;
+import com.ageny.yadegar.sirokhcms.update.UpdateDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -155,7 +153,7 @@ public class AboutusFragment extends Fragment {
             }
         }
         CheckUpdateUrl checkUpdateUrl=new CheckUpdateUrl();
-        checkUpdateUrl.execute();
+        checkUpdateUrl.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
     }
 
 

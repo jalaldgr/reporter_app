@@ -660,7 +660,7 @@ public class SubmitInformationActivity extends AppCompatActivity {
             }
         }
         PreNewsUpdate TM = new PreNewsUpdate();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
     }
 
 }

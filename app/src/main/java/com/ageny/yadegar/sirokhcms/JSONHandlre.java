@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -599,7 +598,7 @@ public class JSONHandlre {
                     //if no error in response
                     Toast toast= Toast.makeText(myCONTEXT,
                             "وضعیت شروع مصاحبه"+s , Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
                     ViewGroup group = (ViewGroup) toast.getView();
                     TextView messageTextView = (TextView) group.getChildAt(0);
                     messageTextView.setTextSize(18);
@@ -653,7 +652,7 @@ public class JSONHandlre {
                     //if no error in response
                     Toast toast= Toast.makeText(myCONTEXT,
                             "وضعیت پایان مصاحبه"+s, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
                     ViewGroup group = (ViewGroup) toast.getView();
                     TextView messageTextView = (TextView) group.getChildAt(0);
                     messageTextView.setTextSize(18);
@@ -1245,7 +1244,7 @@ public class JSONHandlre {
         if (!flag){
             Toast toast= Toast.makeText(cntx,
                     "لطفا اتصال اینترنت را بررسی نمایید." , Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         }
         return flag;

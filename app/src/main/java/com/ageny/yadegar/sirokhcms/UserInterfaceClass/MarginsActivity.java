@@ -107,11 +107,14 @@ public class MarginsActivity extends AppCompatActivity {
 //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 //    }
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {//Write your logic here
-            this.finish();
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Write your logic here
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -203,7 +206,7 @@ public class MarginsActivity extends AppCompatActivity {
         }
 
         GetReferralFolderMargins TM = new GetReferralFolderMargins();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 

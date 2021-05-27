@@ -1,4 +1,5 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
+
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -196,6 +197,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             UserLogin ul = new UserLogin();
-            ul.execute();
+            ul.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
         }
 }

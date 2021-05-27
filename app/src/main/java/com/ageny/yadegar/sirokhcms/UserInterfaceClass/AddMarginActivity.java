@@ -1,4 +1,5 @@
 package com.ageny.yadegar.sirokhcms.UserInterfaceClass;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -267,7 +268,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
             }
         }
         ReferralFolderMarginAdd TM = new ReferralFolderMarginAdd();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 

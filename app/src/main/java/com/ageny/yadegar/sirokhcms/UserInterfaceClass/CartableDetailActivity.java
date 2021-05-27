@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -499,7 +498,7 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         }
         ShowReferralFolder lc = new ShowReferralFolder();
-        lc.execute();
+        lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 
@@ -527,7 +526,7 @@ public class CartableDetailActivity extends AppCompatActivity {
                         startinterviewresult = s;
                         Toast toast= Toast.makeText(CartableDetailActivity.this,
                                 "شروع مصاحبه ثبت شد", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
                         ViewGroup group = (ViewGroup) toast.getView();
                         TextView messageTextView = (TextView) group.getChildAt(0);
                         messageTextView.setTextSize(18);
@@ -551,7 +550,7 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         }
         ReferralFolderStartInterview TM = new ReferralFolderStartInterview();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
     }
     public  void ReferralFolderEndInterview( String RefferalID){
         final String ParamRID           = RefferalID;
@@ -576,7 +575,7 @@ public class CartableDetailActivity extends AppCompatActivity {
                     if (obj.getInt("State")>0) {
                         Toast toast= Toast.makeText(CartableDetailActivity.this,
                                 "پایان مصاحبه ثبت شد", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
                         ViewGroup group = (ViewGroup) toast.getView();
                         TextView messageTextView = (TextView) group.getChildAt(0);
                         messageTextView.setTextSize(18);
@@ -603,7 +602,7 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         }
         ReferralFolderEndInterview TM = new ReferralFolderEndInterview();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
     }
 
 
@@ -677,7 +676,7 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         }
         GetPreNews lc = new GetPreNews();
-        lc.execute();
+        lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 
@@ -714,7 +713,7 @@ public class CartableDetailActivity extends AppCompatActivity {
                 if(this.dialog.isShowing()) this.dialog.dismiss();
                 Toast toast= Toast.makeText(Cntx,
                         resultstr, Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
                 ViewGroup group = (ViewGroup) toast.getView();
                 TextView messageTextView = (TextView) group.getChildAt(0);
                 messageTextView.setTextSize(18);
@@ -750,7 +749,7 @@ public class CartableDetailActivity extends AppCompatActivity {
             }
         }
         ReferralFolderAttachmentAdd lc = new ReferralFolderAttachmentAdd();
-        lc.execute();
+        lc.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 

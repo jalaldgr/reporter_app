@@ -169,7 +169,7 @@ public class Attachments_activity extends AppCompatActivity {
         }
 
         ReferralFolderAttachmentShow TM = new ReferralFolderAttachmentShow();
-        TM.execute();
+        TM.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,null);
 
     }
 
